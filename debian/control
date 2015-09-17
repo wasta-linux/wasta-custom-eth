@@ -1,0 +1,16 @@
+Source: wasta-custom-eth
+Section: utils
+Priority: optional
+Maintainer: Rik Shaw <rikshaw76@gmail.com>
+Build-Depends: debhelper (>= 9.0.0)
+Standards-Version: 3.9.5
+
+Package: wasta-custom-eth
+Architecture: any
+Depends: fonts-sil-abyssinica, ibus-gtk, ibus-gtk3, ibus-kmfl, kmfl-keyboard-sil-ethiopic, ${shlibs:Depends}, ${misc:Depends}
+Description: wasta-Linux Ethiopic customization
+ Sets up machine for wasta-Linux Ethiopic use.
+ This includes:
+    wasta-english-intl-defaults.oxt: installs shared LibreOffice extension w/
+        International English defaults.
+    kmfl-keyboard-sil-ethiopic: install and link user guide to wasta-resources.

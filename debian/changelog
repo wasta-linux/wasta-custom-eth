@@ -1,0 +1,78 @@
+wasta-custom-eth (1.0.3) trusty; urgency=medium
+
+  * migrating existing source to github
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 17 Sep 2015 13:10:16 +0700
+
+wasta-custom-eth (1.0.2) trusty; urgency=medium
+
+  * postinst: replacing amharic-hunspell.oxt with 
+    amharic-ethiopia-customization.oxt
+  * install-files/fonts: adding more amharic fonts
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 09 Sep 2015 11:49:08 +0300
+
+wasta-custom-eth (1.0.1) trusty; urgency=medium
+
+  * postinst: installing amharic-hunspell.oxt extension (for all users)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 16 Jul 2015 16:36:56 +0300
+
+wasta-custom-eth (1.0.0) trusty; urgency=medium
+
+  * install-files: updating EL.kmn
+  * wasta-resources: adding EL keyboarding chart
+  * postinst: updating wasta-resources symlink to SIL Ethiopic keyboard
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 16 Jun 2015 12:29:43 +0300
+
+wasta-custom-eth (0.1.7) trusty; urgency=medium
+
+  * kmfl: adding EL.kmn keyboard and icon
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 12 Jun 2015 14:02:05 +0300
+
+wasta-custom-eth (0.1.6) trusty; urgency=medium
+
+  * postinst: change LO default extension to .doc / .xls formats
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 12 May 2015 13:53:25 +0300
+
+wasta-custom-eth (0.1.5) precise; urgency=medium
+
+  * postrm: fixing symlink removal of kmfl help file
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 26 Jan 2015 15:16:12 +0300
+
+wasta-custom-eth (0.1.4) precise; urgency=medium
+
+  * postinst: logname not available to apt-get, so now resetting LO settings
+    based on for loop with wildcard matching
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 26 Jan 2015 15:00:41 +0300
+
+wasta-custom-eth (0.1.3) precise; urgency=medium
+
+  * postinst: fixing LO settings removal for current user IF owned by root
+    (this would occur if the user hadn't initialized LO before the extenion
+    was installed.)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 26 Jan 2015 14:00:06 +0300
+
+wasta-custom-eth (0.1.2) trusty; urgency=medium
+
+  * postinst: change to LO ODF extension
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 26 Jan 2015 11:29:33 +0300
+
+wasta-custom-eth (0.1.1) trusty; urgency=medium
+
+  * postinst: syntax correction to .oxt installation
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 06 Nov 2014 15:52:08 +0300
+
+wasta-custom-eth (0.1.0) trusty; urgency=low
+
+  * Initial Release.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 06 Nov 2014 14:45:17 +0300
