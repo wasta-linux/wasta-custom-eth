@@ -1,3 +1,10 @@
+wasta-custom-eth (1.0.4) trusty; urgency=medium
+
+  * kmfl/EL.txt: changing name to EL-EthiopianLatin
+  * wasta-resources: updating EL-EthiopianLatin.pdf keyboard chart
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 19 Nov 2015 20:01:59 +0300
+
 wasta-custom-eth (1.0.3) trusty; urgency=medium
 
   * migrating existing source to github
