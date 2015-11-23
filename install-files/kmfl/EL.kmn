@@ -1,7 +1,7 @@
 c EL - Ethiopian Latin
 store(&VERSION) '7.0'
 store(&TARGETS) 'windows macosx linux'
-store(&KEYBOARDVERSION) '1.0'
+store(&KEYBOARDVERSION) '1.0.1'
 store(&BITMAP) 'EL.png'
 store(&NAME) 'EL - Ethiopian Latin'
 store(&MnemonicLayout) "1" c This keyboard uses a mnemonic layout.
@@ -28,11 +28,6 @@ c store(tildevowels) U+00E3 U+1EBD U+0129 U+00F5 U+0169 U+00C3 U+1EBC U+0128 U+0
 c ------------------------------------------------------------------------------
 c punctuation
 c ------------------------------------------------------------------------------
-c "<"  + "'"    > U+2018 c ‘
-c ">"  + "'"    > U+2019 c ’
-c '<'  + '"'    > U+201C c “
-c '>'  + '"'    > U+201D c ”
-
        + "'"    > U+2018 c ‘
 U+2018 + "'"    > U+2019 c ’
 U+2019 + "'"    > U+2018 c ‘ (rota)
@@ -41,8 +36,10 @@ U+2019 + "'"    > U+2018 c ‘ (rota)
 U+201C + U+0022 > U+201D c ”
 U+201D + U+0022 > U+201C c “ (rota)
 
-"<"    + "<"    > U+00AB c «
-">"    + ">"    > U+00BB c »
+"<"  + "'"    > U+2039 c ‹
+">"  + "'"    > U+203A c ›
+"<"  + '"'    > U+00AB c «
+">"  + '"'    > U+00BB c »
 
 ";"    + "'"    > U+02BC c ʼ
 
