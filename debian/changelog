@@ -1,3 +1,9 @@
+wasta-custom-eth (1.0.6) trusty; urgency=medium
+
+  * kmfl/EL.kmn: adding characters to bump to version 1.0.2
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 01 Dec 2015 12:35:44 +0300
+
 wasta-custom-eth (1.0.5) trusty; urgency=medium
 
   * kmfl/EL.kmn: adding angle quotes keyboard sequences
