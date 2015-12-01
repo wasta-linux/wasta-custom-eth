@@ -1,3 +1,10 @@
+wasta-custom-eth (1.0.7) trusty; urgency=medium
+
+  * kmfl/EL.kmn: changing trigger from ']' to '=' (']' is now a 'rota' to
+    create a glottal / ejective).
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 01 Dec 2015 19:43:45 +0300
+
 wasta-custom-eth (1.0.6) trusty; urgency=medium
 
   * kmfl/EL.kmn: adding characters to bump to version 1.0.2
