@@ -1,3 +1,9 @@
+wasta-custom-eth (1.0.8) trusty; urgency=medium
+
+  * kmfl/EL.kmn: various changes (adding macron and double grave vowels, etc)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 04 Dec 2015 16:35:31 +0300
+
 wasta-custom-eth (1.0.7) trusty; urgency=medium
 
   * kmfl/EL.kmn: changing trigger from ']' to '=' (']' is now a 'rota' to
