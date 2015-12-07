@@ -1,3 +1,9 @@
+wasta-custom-eth (1.0.9) trusty; urgency=medium
+
+  * kfml/EL.kmn: syntax error fix
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 07 Dec 2015 09:59:16 +0300
+
 wasta-custom-eth (1.0.8) trusty; urgency=medium
 
   * kmfl/EL.kmn: various changes (adding macron and double grave vowels, etc)
