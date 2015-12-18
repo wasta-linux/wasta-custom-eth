@@ -1,3 +1,9 @@
+wasta-custom-eth (1.0.10) trusty; urgency=medium
+
+  * debian/postrm: cleaning up dangling residual folder (thanks Wes Peacock!)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 18 Dec 2015 14:34:37 +0300
+
 wasta-custom-eth (1.0.9) trusty; urgency=medium
 
   * kfml/EL.kmn: syntax error fix
