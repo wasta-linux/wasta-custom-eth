@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for wasta-custom-eth
+# postrm script for wasta-gnome-3-18-wily
 #
 # see: dh_installdeb(1)
 
@@ -21,17 +21,16 @@ set -e
 
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
-    #
     echo
     echo "*** Removing residual installed files"
     echo
 
-    # Remove symlinks in /usr/bin (created in wasta-custom-eth-postinst.sh)
+    # Remove symlinks in /usr/share/wasta-resources (created in wasta-custom-eth-postinst.sh)
     # legacy location
     rm -rf "/usr/share/wasta-resources/KMFL SIL Ethiopic Readme.htm"
 
-    # current location
-    rm -rf "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
+    # current location: remove full folder
+    rm -rf "/usr/share/wasta-resources/Ethiopia Keyboard Charts/"
     ;;
 
     *)
