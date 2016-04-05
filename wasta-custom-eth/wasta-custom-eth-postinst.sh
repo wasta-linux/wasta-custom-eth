@@ -17,6 +17,8 @@
 #   2015-07-16 rik: Adding amharic-hunspell.oxt extension
 #   2015-09-09 rik: Replacing amharic-hunspell.oxt with
 #       amharic-ethiopia-customization.oxt
+#   2016-04-05 rik: cleaning up LO extension install
+#       - symlinking usb_modeswitch.rules to higher number so not overridden
 #
 # ==============================================================================
 
@@ -48,15 +50,23 @@ echo
 echo "*** Adding kmfl-sil-ethiopic-readme.htm symlink to wasta-resources"
 echo
 
-sudo ln -s /usr/share/doc/kmfl-keyboard-sil-ethiopic/readme.htm \
+ln -sf /usr/share/doc/kmfl-keyboard-sil-ethiopic/readme.htm \
     "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
+
+echo
+echo "*** Creating symlink for USB Modem compatibility"
+echo
+
+# 40- seems to be overridden by later rules, so linking to 99- to ensure always done
+ln -sf /lib/udev/rules.d/40-usb_modeswitch.rules \
+    /lib/udev/rules.d/99-usb_modeswitch.rules
 
 # ------------------------------------------------------------------------------
 # LibreOffice Preferences Extension install (for all users)
 # ------------------------------------------------------------------------------
 
-# REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
-# Send error to null so won't display
+# REMOVE "Wasta-English-Intl-Defaults" extension: remove / reinstall is only
+#   way to update
 EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/wasta-english-intl-defaults.oxt* 2> /dev/null)
 
 if [ "$EXT_FOUND" ];
@@ -71,9 +81,9 @@ echo
 unopkg add --shared /usr/share/wasta-custom-eth/resources/wasta-english-intl-defaults.oxt
 
 
-# REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
+# LEGACY REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
 # Send error to null so won't display
-EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-hunspell.odf* 2> /dev/null)
+EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-hunspell.oxt* 2> /dev/null)
 
 if [ "$EXT_FOUND" ];
 then
@@ -83,13 +93,13 @@ then
     unopkg remove --shared amharic-hunspell.oxt
 fi
 
-# REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
-# Send error to null so won't display
-EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-ethiopia-customization.odf* 2> /dev/null)
+# REMOVE "Amharic Ethiopia Customization" extension: only way to update is
+#   remove then reinstall
+EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-ethiopia-customization.oxt* 2> /dev/null)
 
 if [ "$EXT_FOUND" ];
 then
-    unopkg remove --shared amharic-hunspell.oxt
+    unopkg remove --shared amharic-ethiopia-customization.oxt
 fi
 
 # Install amharic-ethiopia-customization.oxt
