@@ -1,3 +1,9 @@
+wasta-custom-eth (1.0.13) xenial; urgency=medium
+
+  * postrm: replacing with prerm, so that symlinks removed before uninstall
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 05 Apr 2016 11:57:02 +0300
+
 wasta-custom-eth (1.0.12) xenial; urgency=medium
 
   * debian/control: corrected architecture to all instead of any
