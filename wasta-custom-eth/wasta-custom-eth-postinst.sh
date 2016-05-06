@@ -19,6 +19,7 @@
 #       amharic-ethiopia-customization.oxt
 #   2016-04-05 rik: cleaning up LO extension install
 #       - symlinking usb_modeswitch.rules to higher number so not overridden
+#   2016-05-06 rik: only symlinking usb_modeswitch.rules for TRUSTY 14.04
 #
 # ==============================================================================
 
@@ -58,8 +59,17 @@ echo "*** Creating symlink for USB Modem compatibility"
 echo
 
 # 40- seems to be overridden by later rules, so linking to 99- to ensure always done
-ln -sf /lib/udev/rules.d/40-usb_modeswitch.rules \
-    /lib/udev/rules.d/99-usb_modeswitch.rules
+# 2016-05-06 rik: below seems to block functioning in Ubuntu 16.04, so only
+#   doing for trusty
+UBU_SERIES = $(lsb_release -sc)
+if [ $UBU_SERIES == "trusty" ];
+then
+    echo
+    echo "*** Ensuring USB Modem compatibility"
+    echo
+    ln -sf /lib/udev/rules.d/40-usb_modeswitch.rules \
+        /lib/udev/rules.d/99-usb_modeswitch.rules
+fi
 
 # ------------------------------------------------------------------------------
 # LibreOffice Preferences Extension install (for all users)

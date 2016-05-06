@@ -1,3 +1,12 @@
+wasta-custom-eth (1.0.14) xenial; urgency=medium
+
+  * postinst: symlinking /lib/udev/rules.d/40-usb_modeswitch.rules only
+    needed for trusty, it will break xenial usb modems.  So modifying logic
+    to only create symlink in trusty
+  * prerm: removing /lib/udev/rules.d/99-usb_modeswitch.rules if found
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 06 May 2016 14:59:33 +0300
+
 wasta-custom-eth (1.0.13) xenial; urgency=medium
 
   * postrm: replacing with prerm, so that symlinks removed before uninstall

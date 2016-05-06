@@ -29,6 +29,9 @@ case "$1" in
     # current location
     rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/KMFL SIL Ethiopic Readme.htm"
 
+    # USB modeswitch compatibility for 14.04 trusty
+    rm -f /lib/udev/rules.d/99-usb_modeswitch.rules
+
     ;;
 
     failed-upgrade)
