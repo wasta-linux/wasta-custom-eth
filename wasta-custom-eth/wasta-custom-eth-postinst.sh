@@ -54,15 +54,12 @@ echo
 ln -sf /usr/share/doc/kmfl-keyboard-sil-ethiopic/readme.htm \
     "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
 
-echo
-echo "*** Creating symlink for USB Modem compatibility"
-echo
-
 # 40- seems to be overridden by later rules, so linking to 99- to ensure always done
 # 2016-05-06 rik: below seems to block functioning in Ubuntu 16.04, so only
 #   doing for trusty
-UBU_SERIES = $(lsb_release -sc)
-if [ $UBU_SERIES == "trusty" ];
+UBU_SERIES=$(lsb_release -sc)
+
+if [ "$UBU_SERIES" == "trusty" ];
 then
     echo
     echo "*** Ensuring USB Modem compatibility"
