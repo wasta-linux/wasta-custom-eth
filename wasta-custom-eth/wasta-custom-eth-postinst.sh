@@ -20,6 +20,7 @@
 #   2016-04-05 rik: cleaning up LO extension install
 #       - symlinking usb_modeswitch.rules to higher number so not overridden
 #   2016-05-06 rik: only symlinking usb_modeswitch.rules for TRUSTY 14.04
+#   2016-09-17 rik: adding 'disable-vba-refactoring.oxt' LO extension
 #
 # ==============================================================================
 
@@ -119,6 +120,27 @@ unopkg add --shared /usr/share/wasta-custom-eth/resources/amharic-ethiopia-custo
 #   extension, the user's LO settings are created, but owned by root so
 #   they can't change them: solution is to just remove them (will get recreated
 #   when user starts LO the first time).
+
+# REMOVE "Disable VBA Refactoring" extension: only way to update is
+#   remove then reinstall
+EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/disable-vba-refactoring.oxt* 2> /dev/null)
+
+if [ "$EXT_FOUND" ];
+then
+    unopkg remove --shared disable-vba-refactoring.oxt
+fi
+
+# Install disable-vba-refactoring.oxt
+echo
+echo "*** Installing/Upating Disable VBA Refactoring LO Extension"
+echo
+unopkg add --shared /usr/share/wasta-custom-eth/resources/disable-vba-refactoring.oxt
+
+# IF user has not initialized LibreOffice, then when adding the above shared
+#   extension, the user's LO settings are created, but owned by root so
+#   they can't change them: solution is to just remove them (will get recreated
+#   when user starts LO the first time).
+
 
 for LO_FOLDER in /home/*/.config/libreoffice;
 do

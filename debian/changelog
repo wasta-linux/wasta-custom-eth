@@ -1,3 +1,10 @@
+wasta-custom-eth (1.1.0) xenial; urgency=medium
+
+  * postinst: installing 'disable-vba-refactoring.oxt' LO extension
+  * kmfl: adding sil-pwrgeez keyboard
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sat, 17 Sep 2016 08:32:50 +0300
+
 wasta-custom-eth (1.0.14) xenial; urgency=medium
 
   * postinst: symlinking /lib/udev/rules.d/40-usb_modeswitch.rules only

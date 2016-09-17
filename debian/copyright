@@ -1,13 +1,13 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: wasta-custom-eth
-Source: https://launchpad.net/~wasta-linux
+Source: https://github.com/wasta-linux/wasta-custom-eth
 
 Files: *
-Copyright: 2014 Rik Shaw <rikshaw76@gmail.com>
+Copyright: 2016 Rik Shaw <rikshaw76@gmail.com>
 License: GPL-3.0+
 
 Files: debian/*
-Copyright: 2014 Rik Shaw <rikshaw76@gmail.com>
+Copyright: 2016 Rik Shaw <rikshaw76@gmail.com>
 License: GPL-3.0+
 
 License: GPL-3.0+
