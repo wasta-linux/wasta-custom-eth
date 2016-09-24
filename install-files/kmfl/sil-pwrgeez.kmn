@@ -19,7 +19,7 @@ store(chars) 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$
 store (key)       "h"     "l" [NCAPS SHIFT K_H] "m" [NCAPS SHIFT K_S] "r" "s" [RALT K_S ] \
                   "q"             "Q"             "b"     "v"     "t"     "c"     \
            [RALT K_H]             "n"     "N"     "x"     "k"             [RALT SHIFT K_H] \
-                          "w"     "X"     "z"     "Z"     "Y"     "d"     "D"     \
+                          "w"     "X"     "z"     "Z" [SHIFT K_Y] "d"     "D"     \
                   "j"     "g"             "G" [NCAPS SHIFT K_T] "C"  "P"  [RALT K_T ] \
      [RALT SHIFT K_T]     "f"     "p"
 
@@ -201,6 +201,10 @@ c blocking unused caps english letters
 + 'R'       > dk(14)
 + 'M'       > dk(15)
 + 'B'       > dk(16)
++ 'F'       > dk(17)
++ 'J'       > dk(18)
++ 'K'       > dk(19)
++ 'L'       > dk(20)
 
 c **********************************************************************************
 c Diacritics above
@@ -261,6 +265,13 @@ any(DGbase)  + 'i' > index(DGthird  ,1)
 any(DGbase)  + 'a' > index(DGbase   ,1) C matches DGbase, but just for those that will type 'a' for 4th form
 any(DGbase)  + 'y' > index(DGfifth  ,1)
 any(DGbase)  + 'o' > index(DGseventh,1)
+
+c *** in case user is using CAPS LOCK for Diphthong, then let it still work
+any(DGbase)  + [CAPS K_U] > index(DGsecond ,1)
+any(DGbase)  + [CAPS K_I] > index(DGthird  ,1)
+any(DGbase)  + [CAPS K_A] > index(DGbase   ,1) c matches DGbase, but just for those that will type 'a' for 4th form
+any(DGbase)  + [CAPS K_Y] > index(DGfifth  ,1) c Y matches የ so need to make sure only with CAPS LOCK does it trigger
+any(DGbase)  + [CAPS K_O] > index(DGseventh,1)
 
 c Additional 'one off' Diphthongs
 U+121f  + 'M' > U+1359 c mWM ፙ
