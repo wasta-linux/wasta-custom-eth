@@ -1,3 +1,9 @@
+wasta-custom-eth (1.1.1) xenial; urgency=medium
+
+  * kmfl: updates to sil-pwrgeez keyboard
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sat, 24 Sep 2016 09:07:05 +0300
+
 wasta-custom-eth (1.1.0) xenial; urgency=medium
 
   * postinst: installing 'disable-vba-refactoring.oxt' LO extension
