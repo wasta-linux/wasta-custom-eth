@@ -2,6 +2,8 @@ wasta-custom-eth (1.1.3) xenial; urgency=medium
 
   * resources/libgeckofix.so: 'stripping' binary so not removed
     by launchpad (?)
+    - also locating to /usr/lib so no complaint about arch-specific
+    items in /usr/share
 
  -- Rik Shaw <rikshaw76@gmail.com>  Wed, 05 Oct 2016 09:55:25 +0300
 
