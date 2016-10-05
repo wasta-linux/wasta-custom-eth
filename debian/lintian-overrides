@@ -1,0 +1,4 @@
+wasta-custom-eth: arch-independent-package-contains-binary-or-object
+wasta-custom-eth: arch-dependent-file-in-usr-share
+wasta-custom-eth: unstripped-binary-or-object
+wasta-custom-eth: missing-dependency-on-libc

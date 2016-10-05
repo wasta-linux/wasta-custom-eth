@@ -21,6 +21,7 @@
 #       - symlinking usb_modeswitch.rules to higher number so not overridden
 #   2016-05-06 rik: only symlinking usb_modeswitch.rules for TRUSTY 14.04
 #   2016-09-17 rik: adding 'disable-vba-refactoring.oxt' LO extension
+#   2016-10-05 rik: patching Bloom 3.7 for PDF display
 #
 # ==============================================================================
 
@@ -44,6 +45,9 @@ fi
 echo
 echo "*** Beginning wasta-custom-eth-postinst.sh"
 echo
+
+# setup directory for reference later
+DIR=/usr/share/wasta-custom-eth/resources
 
 # ------------------------------------------------------------------------------
 # Create some Symlinks
@@ -86,7 +90,7 @@ fi
 echo
 echo "*** Installing/Updating Wasta English Intl Default LO Extension"
 echo
-unopkg add --shared /usr/share/wasta-custom-eth/resources/wasta-english-intl-defaults.oxt
+unopkg add --shared $DIR/wasta-english-intl-defaults.oxt
 
 
 # LEGACY REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
@@ -114,7 +118,7 @@ fi
 echo
 echo "*** Installing/Upating Amharic Ethiopia Customization LO Extension"
 echo
-unopkg add --shared /usr/share/wasta-custom-eth/resources/amharic-ethiopia-customization.oxt
+unopkg add --shared $DIR/amharic-ethiopia-customization.oxt
 
 # IF user has not initialized LibreOffice, then when adding the above shared
 #   extension, the user's LO settings are created, but owned by root so
@@ -134,7 +138,7 @@ fi
 echo
 echo "*** Installing/Upating Disable VBA Refactoring LO Extension"
 echo
-unopkg add --shared /usr/share/wasta-custom-eth/resources/disable-vba-refactoring.oxt
+unopkg add --shared $DIR/disable-vba-refactoring.oxt
 
 # IF user has not initialized LibreOffice, then when adding the above shared
 #   extension, the user's LO settings are created, but owned by root so
@@ -156,6 +160,19 @@ do
         rm -rf $LO_FOLDER
     fi
 done
+
+# ------------------------------------------------------------------------------
+# Patch Bloom 3.7 in 16.04 for PDF display
+# ------------------------------------------------------------------------------
+if [ -e "/usr/share/bloom-desktop-beta/environ-xulrunner" ] && [ "$(lsb_release -sc)" == "xenial" ];
+then
+    echo
+    echo "*** Patching Bloom 3.7 for PDF display compatibilty"
+    echo
+
+    sed -i -e 's@=\(\${GECKOFX}/geckofix.so\)$@=\"\1 /usr/share/wasta-custom-eth/resources/libgeckofix.so\"@' \
+        /usr/share/bloom-desktop-beta/environ-xulrunner
+fi
 
 # ------------------------------------------------------------------------------
 # Set system-wide Paper Size
