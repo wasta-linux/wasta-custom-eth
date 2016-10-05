@@ -1,3 +1,10 @@
+wasta-custom-eth (1.1.2) xenial; urgency=medium
+
+  * postinst: if Bloom 3.7 installed, patching for PDF display
+    compatibility
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 05 Oct 2016 08:51:12 +0300
+
 wasta-custom-eth (1.1.1) xenial; urgency=medium
 
   * kmfl: updates to sil-pwrgeez keyboard
