@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 9.0.0)
 Standards-Version: 3.9.5
 
 Package: wasta-custom-eth
-Architecture: all
+Architecture: any
 Depends: fonts-sil-abyssinica, ibus-gtk, ibus-gtk3, ibus-kmfl, kmfl-keyboard-sil-ethiopic, ${shlibs:Depends}, ${misc:Depends}
 Description: Wasta-Linux Ethiopia Customization
  Sets up machine for Wasta-Linux Ethiopia use.

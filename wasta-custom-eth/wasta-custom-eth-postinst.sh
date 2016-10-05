@@ -170,7 +170,7 @@ then
     echo "*** Patching Bloom 3.7 for PDF display compatibilty"
     echo
 
-    sed -i -e 's@=\(\${GECKOFX}/geckofix.so\)$@=\"\1 /usr/share/wasta-custom-eth/resources/libgeckofix.so\"@' \
+    sed -i -e 's@=\(\${GECKOFX}/geckofix.so\)$@=\"\1 \${GECKOFX}/libgeckofix-wasta.so\"@' \
         /usr/share/bloom-desktop-beta/environ-xulrunner
 fi
 
