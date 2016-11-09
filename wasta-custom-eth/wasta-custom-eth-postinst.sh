@@ -22,6 +22,7 @@
 #   2016-05-06 rik: only symlinking usb_modeswitch.rules for TRUSTY 14.04
 #   2016-09-17 rik: adding 'disable-vba-refactoring.oxt' LO extension
 #   2016-10-05 rik: patching Bloom 3.7 for PDF display
+#   2016-11-09 rik: disabling 'whoopsie' error reporting service.
 #
 # ==============================================================================
 
@@ -164,14 +165,26 @@ done
 # ------------------------------------------------------------------------------
 # Patch Bloom 3.7 in 16.04 for PDF display
 # ------------------------------------------------------------------------------
-if [ -e "/usr/share/bloom-desktop-beta/environ-xulrunner" ] && [ "$(lsb_release -sc)" == "xenial" ];
+#if [ -e "/usr/share/bloom-desktop-beta/environ-xulrunner" ] && [ "$(lsb_release -sc)" == "xenial" ];
+#then
+#    echo
+#    echo "*** Patching Bloom 3.7 for PDF display compatibilty"
+#    echo
+
+#    sed -i -e 's@=\(\${GECKOFX}/geckofix.so\)$@=\"\1 \${GECKOFX}/libgeckofix-wasta.so\"@' \
+#        /usr/share/bloom-desktop-beta/environ-xulrunner
+#fi
+
+# ------------------------------------------------------------------------------
+# Disable "whoopsie" if found: daisy.ubuntu.com blocked by EthioTelecom
+#   so hangs shutdown
+# ------------------------------------------------------------------------------
+if [ -x "/usr/bin/whoopsie" ];
 then
     echo
-    echo "*** Patching Bloom 3.7 for PDF display compatibilty"
+    echo "*** Disabling 'whoopsie' error reporting"
     echo
-
-    sed -i -e 's@=\(\${GECKOFX}/geckofix.so\)$@=\"\1 \${GECKOFX}/libgeckofix-wasta.so\"@' \
-        /usr/share/bloom-desktop-beta/environ-xulrunner
+    systemctl disable whoopsie.service
 fi
 
 # ------------------------------------------------------------------------------
