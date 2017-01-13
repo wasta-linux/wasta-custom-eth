@@ -1,3 +1,9 @@
+wasta-custom-eth (1.1.6) xenial; urgency=medium
+
+  * adding LO 5.2 PPA
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 13 Jan 2017 11:18:32 +0300
+
 wasta-custom-eth (1.1.5) xenial; urgency=medium
 
   * postinst: disable 'whoopsie' error reporting service if found

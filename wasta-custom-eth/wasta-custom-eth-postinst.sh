@@ -23,6 +23,8 @@
 #   2016-09-17 rik: adding 'disable-vba-refactoring.oxt' LO extension
 #   2016-10-05 rik: patching Bloom 3.7 for PDF display
 #   2016-11-09 rik: disabling 'whoopsie' error reporting service.
+#   2017-01-13 rik: adding LO 5.2 PPA, and adjusting LO launchers to force
+#       input method since 5.2 bug makes kmfl not remove the surrounding text
 #
 # ==============================================================================
 
@@ -60,19 +62,80 @@ echo
 ln -sf /usr/share/doc/kmfl-keyboard-sil-ethiopic/readme.htm \
     "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
 
-# 40- seems to be overridden by later rules, so linking to 99- to ensure always done
-# 2016-05-06 rik: below seems to block functioning in Ubuntu 16.04, so only
-#   doing for trusty
-UBU_SERIES=$(lsb_release -sc)
+# ------------------------------------------------------------------------------
+# Add LibreOffice 5.2 PPA
+# ------------------------------------------------------------------------------
 
-if [ "$UBU_SERIES" == "trusty" ];
+# get series, load them up.
+SERIES=$(lsb_release -sc)
+case "$SERIES" in
+
+  trusty|qiana|rebecca|rafaela|rosa)
+    #LTS 14.04-based Mint 17.x
+    REPO_SERIES="trusty"
+  ;;
+
+  xenial|sarah)
+    #LTS 16.04-based Mint 18.x
+    REPO_SERIES="xenial"
+  ;;
+
+  *)
+    # Don't know the series, just go with what is reported
+    REPO_SERIES=$SERIES
+  ;;
+esac
+
+if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list ];
 then
     echo
-    echo "*** Ensuring USB Modem compatibility"
+    echo "*** Adding LibreOffice 5.2 $REPO_SERIES PPA"
     echo
-    ln -sf /lib/udev/rules.d/40-usb_modeswitch.rules \
-        /lib/udev/rules.d/99-usb_modeswitch.rules
+    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu $REPO_SERIES main" | \
+        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list
+    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu $REPO_SERIES main" | \
+        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list
+else
+    # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
+    echo
+    echo "*** LibreOffice 5.2 $REPO_SERIES PPA already exists, ensuring active"
+    echo
+    sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu '$REPO_SERIES' main' \
+        -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu '$REPO_SERIES' main@d' \
+        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list
 fi
+
+# ------------------------------------------------------------------------------
+# LibreOffice 5.2 FIX for ibus/kmfl not working correctly
+# ------------------------------------------------------------------------------
+
+for USER_HOME in /home/*;
+do
+    USER_HOME_NAME=$(basename $USER_HOME)
+
+    # only process if "real user" (so not for wasta-remastersys, etc.)
+    if id "$USER_HOME_NAME" >/dev/null 2>&1;
+    then
+        echo
+        echo "*** ensuring LO ibus/kmfl functionality for $USER_HOME_NAME"
+        echo
+
+        # ensure user applications folder exists
+        mkdir -p $USER_HOME/.local/share/applications
+
+        # copy in LO desktop launchers
+        cp /usr/share/applications/libreoffice-*.desktop \
+            $USER_HOME/.local/share/applications
+
+        # ensure all ownership is correct
+        chown -R $USER_HOME_NAME:$USER_HOME_NAME \
+            $USER_HOME/.local/share/applications
+
+        # update LO desktop launchers to use modified env variables
+        sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
+            $USER_HOME/.local/share/applications/libreoffice-*.desktop
+    fi
+done
 
 # ------------------------------------------------------------------------------
 # LibreOffice Preferences Extension install (for all users)
@@ -161,19 +224,6 @@ do
         rm -rf $LO_FOLDER
     fi
 done
-
-# ------------------------------------------------------------------------------
-# Patch Bloom 3.7 in 16.04 for PDF display
-# ------------------------------------------------------------------------------
-#if [ -e "/usr/share/bloom-desktop-beta/environ-xulrunner" ] && [ "$(lsb_release -sc)" == "xenial" ];
-#then
-#    echo
-#    echo "*** Patching Bloom 3.7 for PDF display compatibilty"
-#    echo
-
-#    sed -i -e 's@=\(\${GECKOFX}/geckofix.so\)$@=\"\1 \${GECKOFX}/libgeckofix-wasta.so\"@' \
-#        /usr/share/bloom-desktop-beta/environ-xulrunner
-#fi
 
 # ------------------------------------------------------------------------------
 # Disable "whoopsie" if found: daisy.ubuntu.com blocked by EthioTelecom
