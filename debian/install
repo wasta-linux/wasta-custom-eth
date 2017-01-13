@@ -1,5 +1,4 @@
 install-files/fonts              usr/share
 install-files/kmfl               usr/share
 install-files/wasta-resources    usr/share
-install-files/geckofx-29         usr/lib/cli
 wasta-custom-eth                 usr/share
