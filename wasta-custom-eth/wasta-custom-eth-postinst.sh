@@ -86,6 +86,44 @@ case "$SERIES" in
   ;;
 esac
 
+APT_SOURCES=/etc/apt/sources.list
+
+if ! [ -e $APT_SOURCES.wasta ];
+then
+    APT_SOURCES_D=/etc/apt/sources.list.d
+else
+    # wasta-offline active: adjust apt file locations
+    echo
+    echo "*** wasta-offline active, applying repository adjustments to /etc/apt/sources.list.wasta"
+    echo
+    APT_SOURCES=/etc/apt/sources.list.wasta
+    if [ "$(ls -A /etc/apt/sources.list.d)" ];
+    then
+        echo
+        echo "*** wasta-offline 'offline and internet' mode detected"
+        echo
+        # files inside /etc/apt/sources.list.d so it is active
+        # wasta-offline "offline and internet mode": no change to sources.list.d
+        APT_SOURCES_D=/etc/apt/sources.list.d
+    else
+        echo
+        echo "*** wasta-offline 'offline only' mode detected"
+        echo
+        # no files inside /etc/apt/sources.list.d
+        # wasta-offline "offline only mode": change to sources.list.d.wasta
+        APT_SOURCES_D=/etc/apt/sources.list.d.wasta
+    fi
+fi
+
+# first backup $APT_SOURCES in case something goes wrong
+# delete $APT_SOURCES.save if older than 30 days
+find /etc/apt  -maxdepth 1 -mtime +30 -iwholename $APT_SOURCES.save -exec rm {} \;
+
+if ! [ -e $APT_SOURCES.save ];
+then
+    cp $APT_SOURCES $APT_SOURCES.save
+fi
+
 if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list ];
 then
     echo

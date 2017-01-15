@@ -1,3 +1,9 @@
+wasta-custom-eth (1.1.7) xenial; urgency=medium
+
+  * correcting LO 5.2 PPA syntax
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 15 Jan 2017 14:37:18 +0300
+
 wasta-custom-eth (1.1.6) xenial; urgency=medium
 
   * adding LO 5.2 PPA
