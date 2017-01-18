@@ -1,3 +1,10 @@
+wasta-custom-eth (1.1.8) xenial; urgency=medium
+
+  * replacing kmfl pwr-geez with sil-ethiopic-power-g (minor updates to
+    standardize with Keyman version)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 18 Jan 2017 14:03:54 +0300
+
 wasta-custom-eth (1.1.7) xenial; urgency=medium
 
   * correcting LO 5.2 PPA syntax
