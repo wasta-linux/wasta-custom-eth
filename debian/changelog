@@ -1,3 +1,9 @@
+wasta-custom-eth (1.1.9) xenial; urgency=medium
+
+  * correcting encoding on sil_ethiopic_power_g.kmn file
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 20 Jan 2017 12:33:55 +0300
+
 wasta-custom-eth (1.1.8) xenial; urgency=medium
 
   * replacing kmfl pwr-geez with sil-ethiopic-power-g (minor updates to
