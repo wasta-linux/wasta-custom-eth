@@ -1,3 +1,9 @@
+wasta-custom-eth (1.1.10) xenial; urgency=medium
+
+  * postinst: adding LO ibus/kmfl compatiblity for /etc/skel
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 16 Feb 2017 18:26:10 +0300
+
 wasta-custom-eth (1.1.9) xenial; urgency=medium
 
   * correcting encoding on sil_ethiopic_power_g.kmn file

@@ -25,6 +25,7 @@
 #   2016-11-09 rik: disabling 'whoopsie' error reporting service.
 #   2017-01-13 rik: adding LO 5.2 PPA, and adjusting LO launchers to force
 #       input method since 5.2 bug makes kmfl not remove the surrounding text
+#   2017-02-16 rik: adding LO launcher fix to /etc/skel
 #
 # ==============================================================================
 
@@ -174,6 +175,22 @@ do
             $USER_HOME/.local/share/applications/libreoffice-*.desktop
     fi
 done
+
+# /etc/skel updates:
+echo
+echo "*** ensuring LO ibus/kmfl functionality for default user profile"
+echo
+
+# ensure user applications folder exists
+mkdir -p /etc/skel/.local/share/applications
+
+# copy in LO desktop launchers
+cp /usr/share/applications/libreoffice-*.desktop \
+    /etc/skel/.local/share/applications
+
+# update LO desktop launchers to use modified env variables
+sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
+    /etc/skel/.local/share/applications/libreoffice-*.desktop
 
 # ------------------------------------------------------------------------------
 # LibreOffice Preferences Extension install (for all users)
