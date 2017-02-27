@@ -1,6 +1,15 @@
+wasta-custom-eth (1.2.0) xenial; urgency=medium
+
+  * kmfl: updates to sil_el_ethiopian_latin, sil_power_g_ethiopic and also
+    adding etb_sil_ethiopic until upstream changes merged
+  * control: moved items to 'recommends' instead of 'depends'
+  * postinst: installing 'standard' keyboards for all users
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 26 Feb 2017 17:53:26 +0300
+
 wasta-custom-eth (1.1.10) xenial; urgency=medium
 
-  * postinst: adding LO ibus/kmfl compatiblity for /etc/skel
+  * postinst: adding LO ibus/kmfl compatibility for /etc/skel
 
  -- Rik Shaw <rikshaw76@gmail.com>  Thu, 16 Feb 2017 18:26:10 +0300
 

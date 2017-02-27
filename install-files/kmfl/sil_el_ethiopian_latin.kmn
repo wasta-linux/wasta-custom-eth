@@ -1,9 +1,9 @@
-﻿c EL - Ethiopian Latin
-store(&VERSION) '6.0'
+﻿c SIL EL - Ethiopian Latin 2017-02-24
+store(&VERSION) '7.0'
 store(&TARGETS) 'windows macosx linux'
-store(&KEYBOARDVERSION) '1.0.4'
-store(&BITMAP) 'EL.png'
-store(&NAME) 'EL - Ethiopian Latin'
+store(&KEYBOARDVERSION) '1.2'
+store(&BITMAP) 'sil_el_ethiopian_latin.bmp'
+store(&NAME) 'SIL EL - Ethiopian Latin'
 store(&MnemonicLayout) "1" c This keyboard uses a mnemonic layout.
 
 begin Unicode > use(main)
@@ -13,24 +13,26 @@ group(main) using keys
 c ------------------------------------------------------------------------------
 c arrays
 c ------------------------------------------------------------------------------
-store(plainvowels) "aeiouAEIOU"
+store(plainvowels)      "aeiouAEIOU"
 
-store(acutevowels) U+00E1 U+00E9 U+00ED U+00F3 U+00FA U+00C1 U+00C9 U+00CD U+00D3 U+00DA
+store(acutevowels)       U+00E1 U+00E9 U+00ED U+00F3 U+00FA U+00C1 U+00C9 U+00CD U+00D3 U+00DA
 
-store(gravevowels) U+00E0 U+00E8 U+00EC U+00F2 U+00F9 U+00C0 U+00C8 U+00CC U+00D2 U+00D9
+store(gravevowels)       U+00E0 U+00E8 U+00EC U+00F2 U+00F9 U+00C0 U+00C8 U+00CC U+00D2 U+00D9
 
-store(circumflexvowels) U+00E2 U+00EA U+00EE U+00F4 U+00FB U+00C2 U+00CA U+00CE U+00D4 U+00DB
+store(circumflexvowels)  U+00E2 U+00EA U+00EE U+00F4 U+00FB U+00C2 U+00CA U+00CE U+00D4 U+00DB
 
-store(caronvowels) U+01CE U+011B U+01D0 U+01D2 U+01D4 U+01CD U+011A U+01CF U+01D1 U+01D3
+store(caronvowels)       U+01CE U+011B U+01D0 U+01D2 U+01D4 U+01CD U+011A U+01CF U+01D1 U+01D3
 
-c store(tildevowels) U+00E3 U+1EBD U+0129 U+00F5 U+0169 U+00C3 U+1EBC U+0128 U+00D5 U+0168
+c store(tildevowels)     U+00E3 U+1EBD U+0129 U+00F5 U+0169 U+00C3 U+1EBC U+0128 U+00D5 U+0168
 
 store(doublegravevowels) U+0201 U+0205 U+0209 U+020D U+0215 U+0200 U+0204 U+0208 U+020C U+0214
 
-store(macronvowels) U+0101 U+0113 U+012B U+014D U+016B U+0100 U+0112 U+012A U+014C U+016A
+store(macronvowels)      U+0101 U+0113 U+012B U+014D U+016B U+0100 U+0112 U+012A U+014C U+016A
+
+store(diaeresisvowels)   U+00E4 U+00EB U+00EF U+00F6 U+00FC U+00C4 U+00CB U+00CF U+00D6 U+00DC
 
 c ------------------------------------------------------------------------------
-c punctuation
+c punctuation / special "word forming" characters
 c ------------------------------------------------------------------------------
        + "'"    > U+2018 c ‘
 U+2018 + "'"    > U+2019 c ’
@@ -45,10 +47,14 @@ U+201D + U+0022 > U+201C c “ (rota)
 "<"    + '"'    > U+00AB c «
 ">"    + '"'    > U+00BB c »
 
+";"    + "x"    > U+0295 c ʕ
+
 U+005D + U+005D > U+02BC c ʼ
 U+02BC + U+005D > U+005D c ] (rota)
 
 ";"    + "'"    > U+A78C c ꞌ
+
+"]"    + ":"    > U+A789 c ꞉
 
 c ------------------------------------------------------------------------------
 c special vowels (no diacritics)
@@ -84,6 +90,9 @@ c ------------------------------------------------------------------------------
 ";" + "O" > U+0186 c Ɔ
 "O" + "<" > U+0186 c Ɔ
 "]" + "O" > U+0186 c Ɔ
+
+"=" + "o" > U+00F8 c ø
+"=" + "O" > U+00D8 c Ø
 
 ";" + "u" > U+0289 c ʉ
 "u" + "<" > U+0289 c ʉ
@@ -135,8 +144,6 @@ c ------------------------------------------------------------------------------
 "s" + "<" > U+0283 c ʃ
 ";" + "S" > U+0286 c ʆ
 "S" + "<" > U+0286 c ʆ
-
-";" + "x" > U+0295 c ʕ
 
 c ------------------------------------------------------------------------------
 c acute characters: composed else + U+0301
@@ -347,3 +354,8 @@ U+0186 + "0" > U+0186 U+0331 c Ɔ̱
 
 U+028B + "0" > U+028B U+0331 c ʋ̱
 U+01B2 + "0" > U+01B2 U+0331 c Ʋ̱
+
+c ------------------------------------------------------------------------------
+c diaeresis characters: composed else + U+0308
+c ------------------------------------------------------------------------------
+any(plainvowels) + "#" > index(diaeresisvowels, 1) c äëïöüÄËÏÖÜ

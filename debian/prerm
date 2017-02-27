@@ -24,12 +24,13 @@ case "$1" in
     echo
 
     # Remove symlinks in /usr/share/wasta-resources (created in wasta-custom-eth-postinst.sh)
-    # legacy location
+    # legacy locations
     rm -f "/usr/share/wasta-resources/KMFL SIL Ethiopic Readme.htm"
-    # current location
     rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/KMFL SIL Ethiopic Readme.htm"
+    # current location
+    rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
 
-    # USB modeswitch compatibility for 14.04 trusty
+    # USB modeswitch compatibility for 14.04 trusty but updated package fixes instead
     rm -f /lib/udev/rules.d/99-usb_modeswitch.rules
 
     ;;
