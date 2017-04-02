@@ -331,10 +331,8 @@ do
         DBUS_SESSION="dbus-run-session --"
     fi
 
-    echo "current user: $CURRENT_USER"
     IBUS_ENGINES=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general preload-engines")
     ENGINES_ORDER=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general engines-order")
-    echo "after get of ibus engines"
 
     # remove legacy el, power-g, and sil ethiopic engines
     # (, \)\{0,1\} removes any OPTIONAL ", " preceding the kmfl keyboard name
