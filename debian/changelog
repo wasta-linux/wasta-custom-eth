@@ -1,3 +1,10 @@
+wasta-custom-eth (1.2.1) xenial; urgency=medium
+
+  * kmfl: MINOR updates to sil_ethiopic_power_g, etb_sil_ethiopic to
+    synchronize with Keyman versions
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 02 Apr 2017 16:23:11 +0300
+
 wasta-custom-eth (1.2.0) xenial; urgency=medium
 
   * kmfl: updates to sil_el_ethiopian_latin, sil_power_g_ethiopic and also

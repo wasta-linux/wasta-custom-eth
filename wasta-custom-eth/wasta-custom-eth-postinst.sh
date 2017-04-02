@@ -342,6 +342,7 @@ do
     IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil-el-ethiopian-latin.kmn'@@" <<<"$IBUS_ENGINES")
     IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/EL.kmn'@@" <<<"$IBUS_ENGINES")
     IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil-pwrgeez.kmn'@@" <<<"$IBUS_ENGINES")
+    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil_power_g_ethiopic.kmn'@@" <<<"$IBUS_ENGINES")
 
     if [[ "$IBUS_ENGINES" == *"[]"* ]];
     then
@@ -362,14 +363,14 @@ do
         IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn']@" <<<"$IBUS_ENGINES")
     fi
 
-    POWERG_INSTALLED=$(grep sil_power_g_ethiopic.kmn <<<"$IBUS_ENGINES")
+    POWERG_INSTALLED=$(grep sil_ethiopic_power_g.kmn <<<"$IBUS_ENGINES")
     if [[ -z "$POWERG_INSTALLED" ]];
     then
         echo
-        echo "Installing sil_power_g_ethiopic keyboard for user: $CURRENT_USER"
+        echo "Installing sil_ethiopic_power_g keyboard for user: $CURRENT_USER"
         echo
         # append engine to list
-        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_power_g_ethiopic.kmn']@" <<<"$IBUS_ENGINES")
+        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_ethiopic_power_g.kmn']@" <<<"$IBUS_ENGINES")
     fi
 
     ETBSIL_INSTALLED=$(grep etb_sil_ethiopic.kmn <<<"$IBUS_ENGINES")
