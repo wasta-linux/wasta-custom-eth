@@ -27,6 +27,8 @@
 #       input method since 5.2 bug makes kmfl not remove the surrounding text
 #   2017-02-16 rik: adding LO launcher fix to /etc/skel
 #   2017-02-27 rik: adding ibus "standard" keyboard installs for all users
+#   2017-05-04 rik: syntax fix for loop through /home folders for keyboard
+#       installs.
 #
 # ==============================================================================
 
@@ -169,6 +171,9 @@ do
         # ensure user applications folder exists
         mkdir -p $USER_HOME/.local/share/applications
 
+        # sleep needed to avoid race condition that was crashing cinnamon??
+        sleep 2
+
         # copy in LO desktop launchers
         cp /usr/share/applications/libreoffice-*.desktop \
             $USER_HOME/.local/share/applications
@@ -242,7 +247,7 @@ fi
 
 # Install amharic-ethiopia-customization.oxt
 echo
-echo "*** Installing/Upating Amharic Ethiopia Customization LO Extension"
+echo "*** Installing/Updating Amharic Ethiopia Customization LO Extension"
 echo
 unopkg add --shared $DIR/amharic-ethiopia-customization.oxt
 
@@ -262,7 +267,7 @@ fi
 
 # Install disable-vba-refactoring.oxt
 echo
-echo "*** Installing/Upating Disable VBA Refactoring LO Extension"
+echo "*** Installing/Updating Disable VBA Refactoring LO Extension"
 echo
 unopkg add --shared $DIR/disable-vba-refactoring.oxt
 
@@ -274,6 +279,7 @@ unopkg add --shared $DIR/disable-vba-refactoring.oxt
 
 for LO_FOLDER in /home/*/.config/libreoffice;
 do
+    LO_OWNER=""
     LO_OWNER=$(stat -c '%U' $LO_FOLDER)
 
     if [ "$LO_OWNER" == "root" ];
@@ -303,7 +309,7 @@ fi
 # This assumes ibus 1.5+ (so doesn't work for precise)
 # ------------------------------------------------------------------------------
 LOCAL_USERS=""
-for USER_FOLDER in $(ls -1 home)
+for USER_FOLDER in $(ls -1 /home)
 do
     # if user is in /etc/passwd then it is a 'real user' as opposed to
     # something like wasta-remastersys

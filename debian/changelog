@@ -1,3 +1,9 @@
+wasta-custom-eth (1.2.2) xenial; urgency=medium
+
+  * postinst: syntax fix for selecting /home folders
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 04 May 2017 11:29:49 +0300
+
 wasta-custom-eth (1.2.1) xenial; urgency=medium
 
   * kmfl: MINOR updates to sil_ethiopic_power_g, etb_sil_ethiopic to
