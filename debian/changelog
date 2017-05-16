@@ -1,3 +1,10 @@
+wasta-custom-eth (1.2.3) xenial; urgency=medium
+
+  * sil_el_ethiopian_latin.kmn: correcting <H bar> to 0126 instead
+    of 0128.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 16 May 2017 19:02:54 +0300
+
 wasta-custom-eth (1.2.2) xenial; urgency=medium
 
   * postinst: syntax fix for selecting /home folders
