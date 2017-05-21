@@ -29,6 +29,7 @@
 #   2017-02-27 rik: adding ibus "standard" keyboard installs for all users
 #   2017-05-04 rik: syntax fix for loop through /home folders for keyboard
 #       installs.
+#   2017-05-21 rik: auto install hp-plugin non-interactively
 #
 # ==============================================================================
 
@@ -85,7 +86,7 @@ case "$SERIES" in
     REPO_SERIES="trusty"
   ;;
 
-  xenial|sarah)
+  xenial|sarah|serena|sonya)
     #LTS 16.04-based Mint 18.x
     REPO_SERIES="xenial"
   ;;
@@ -393,13 +394,35 @@ do
     # restart ibus
     su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" >/dev/null 2>&1
 done
-
+ 
 # ------------------------------------------------------------------------------
 # Set system-wide Paper Size
 # ------------------------------------------------------------------------------
 # Note: This sets /etc/papersize.  However, many apps do not look at this
 #   location, but instead maintain their own settings for paper size :-(
 paperconfig -p a4
+
+# ------------------------------------------------------------------------------
+# Install hp-plugin (non-interactive)
+# ------------------------------------------------------------------------------
+# Install hp-plugin automatically: needed by some HP printers such as black
+#   HP m127 used by SIL Ethiopia.  Don't display output to confuse user.
+
+case "$REPO_SERIES" in
+  trusty)
+    echo "*** trusty: installing hp-plugin"
+    yes | hp-plugin -p $DIR/hp-plugin-trusty/ >/dev/null 2>&1
+    echo "*** trusty: hp-plugin install complete"
+  ;;
+  xenial)
+    echo
+    echo "*** xenial: installing hp-plugin"
+    yes | hp-plugin -p $DIR/hp-plugin-xenial/ >/dev/null 2>&1
+    echo "*** xenial: hp-plugin install complete"
+  ;;
+esac
+
+echo
 
 # ------------------------------------------------------------------------------
 # Finished

@@ -1,7 +1,7 @@
 ﻿store(&VERSION) '7.0'
 store(&NAME) 'SIL Ethiopic'
 store(&TARGETS) 'windows macosx linux'
-store(&KEYBOARDVERSION) '2.0'
+store(&KEYBOARDVERSION) '2.0.2'
 store(&ETHNOLOGUECODE) 'amh bcq bst dwr gdl gez gmv gof guk kxc mdx suq tig zay'
 store(&BITMAP) 'etb_sil_ethiopic.bmp'
 store(&COPYRIGHT) '© SIL Ethiopia'
@@ -255,7 +255,7 @@ c ******************************************************************************
 U+1362 + any(diacKey) > index(diacU,2) c . + key
 
 c *********************************************************************************
-c Punctuation
+c Punctuation / Special "Word Forming Characters"
 c *********************************************************************************
 
 + ':'        > U+1361 c Amharic space  ፡
@@ -287,6 +287,12 @@ c Amharic quotes
 '>'    + '>' > U+00bb c Amharic closing double quote  »
 '>'    + '"' > U+00bb c Amharic closing double quote  »
 '>' + U+0027 > U+203a c Amharic closing single quote  ›
+
+']' + '~'        > U+223c c Saho Lengthening symbol (looks like tilde)
+']' + '\'        > U+223c c Saho Lengthening symbol (looks like tilde)
+
+U+0027 + U+0027 > U+a78c c Saho Glottal
+U+a78c + U+0027 > U+0027 c Normal Single Quote (rota)
 
 U+121d + ')' > U+e496 c 'm' with circle  
 

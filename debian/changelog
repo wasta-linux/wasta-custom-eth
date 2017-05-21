@@ -1,3 +1,10 @@
+wasta-custom-eth (1.2.4) xenial; urgency=medium
+
+  * postinst: installing hp-plugin non-interactively
+  * fonts: adding Andika Lines and LSManuscriptArrows
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 21 May 2017 11:35:32 +0300
+
 wasta-custom-eth (1.2.3) xenial; urgency=medium
 
   * sil_el_ethiopian_latin.kmn: correcting <H bar> to 0126 instead
