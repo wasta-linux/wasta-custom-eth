@@ -8,6 +8,7 @@ store(&COPYRIGHT) '© SIL Ethiopia'
 store(&MESSAGE) 'The SIL Ethiopic Unicode keyboard enables typing in all Ethiopic Fidel based languages.'
 store(&LANGUAGE) 'x045E'
 store(&WINDOWSLANGUAGES) 'x045E'
+store(&LAYOUT) 'default'
 
 c *********************************************************************************
 

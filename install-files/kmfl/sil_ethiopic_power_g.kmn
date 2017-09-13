@@ -8,6 +8,7 @@ store(&COPYRIGHT) '© SIL Ethiopia'
 store(&MESSAGE) 'The SIL Power-G Ethiopic keyboard was developed to input Ethiopic Fidel scripts using the keyboarding sequences found in the Power Geez (Phonetic) keyboard from Concepts Data Systems.'
 store(&LANGUAGE) 'x045E'
 store(&WINDOWSLANGUAGES) 'x045E'
+store(&LAYOUT) 'default'
 
 c *********************************************************************************
 

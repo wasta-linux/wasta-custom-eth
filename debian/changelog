@@ -1,3 +1,10 @@
+wasta-custom-eth (1.2.5) xenial; urgency=medium
+
+  * kmfl: adding "store(&LAYOUT) 'default'" so that the 'underlying' keyboard
+    used by ibus matches the system keyboard rather than defaulting to 'us'.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 13 Sep 2017 13:27:18 +0300
+
 wasta-custom-eth (1.2.4) xenial; urgency=medium
 
   * postinst: installing hp-plugin non-interactively
