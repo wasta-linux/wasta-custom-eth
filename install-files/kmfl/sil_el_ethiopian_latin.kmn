@@ -1,7 +1,7 @@
 ﻿store(&VERSION) '7.0'
 store(&NAME) 'SIL EL - Ethiopian Latin'
 store(&TARGETS) 'windows macosx linux'
-store(&KEYBOARDVERSION) '1.2.1'
+store(&KEYBOARDVERSION) '1.2.2'
 store(&ETHNOLOGUECODE) 'amf bcq gmv gof guk gwd kqy kxc mdx moy mpe suq tsb wal'
 store(&BITMAP) 'sil_el_ethiopian_latin.bmp'
 store(&COPYRIGHT) '© SIL Ethiopia'
@@ -49,6 +49,7 @@ U+201D + U+0022 > U+201C c “ (rota)
 "<"    + '"'    > U+00AB c «
 ">"    + '"'    > U+00BB c »
 
+";"    + "X"    > U+0294 c ʔ
 ";"    + "x"    > U+0295 c ʕ
 
 U+005D + U+005D > U+02BC c ʼ
@@ -130,7 +131,7 @@ c ------------------------------------------------------------------------------
 "G" + "<" > U+0193 c Ɠ
 
 ";" + "h" > U+0127 c ħ
-";" + "H" > U+0126 c Ħ
+";" + "H" > U+0128 c Ħ
 
 ";" + "n" > U+014B c ŋ
 "n" + "<" > U+014B c ŋ

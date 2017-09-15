@@ -1,3 +1,9 @@
+wasta-custom-eth (1.2.6) xenial; urgency=medium
+
+  * kmfl: updated el to include U+0294 ʔ and updated keyboard map file
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 15 Sep 2017 16:01:24 +0300
+
 wasta-custom-eth (1.2.5) xenial; urgency=medium
 
   * kmfl: adding "store(&LAYOUT) 'default'" so that the 'underlying' keyboard
