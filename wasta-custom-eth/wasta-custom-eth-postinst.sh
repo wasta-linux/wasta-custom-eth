@@ -30,6 +30,8 @@
 #   2017-05-04 rik: syntax fix for loop through /home folders for keyboard
 #       installs.
 #   2017-05-21 rik: auto install hp-plugin non-interactively
+#   2017-09-29 rik: disabling apt.conf.d/99nocache apt setting so that
+#       pfsense's squid cache will be used for updates
 #
 # ==============================================================================
 
@@ -423,6 +425,17 @@ case "$REPO_SERIES" in
 esac
 
 echo
+
+# ------------------------------------------------------------------------------
+# Disable any apt.conf.d "nocache" file (from wasta-core-xenial)
+# ------------------------------------------------------------------------------
+# The nocache option for apt prevents local cache from squid (used by pfsense
+# at main Addis office) from being used.  Need to disable.
+
+if [ -e /etc/apt/apt.conf.d/99nocache ];
+then
+    sed -i -e 's@^Acquire@#Acquire@' /etc/apt/apt.conf.d/99nocache
+fi
 
 # ------------------------------------------------------------------------------
 # Finished
