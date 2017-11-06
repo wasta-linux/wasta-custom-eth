@@ -1,5 +1,12 @@
 wasta-custom-eth (1.2.11) xenial; urgency=medium
 
+  * bump in github since prior commit was "verified" it is causing launchpad
+    import error.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 06 Nov 2017 17:58:10 +0300
+
+wasta-custom-eth (1.2.11) xenial; urgency=medium
+
   * EL: fix unicode point from 0128 to 0126 for H bar
 
  -- Rik Shaw <rikshaw76@gmail.com>  Thu, 02 Nov 2017 14:51:18 +0300
