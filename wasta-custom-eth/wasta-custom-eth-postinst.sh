@@ -32,6 +32,7 @@
 #   2017-05-21 rik: auto install hp-plugin non-interactively
 #   2017-09-29 rik: disabling apt.conf.d/99nocache apt setting so that
 #       pfsense's squid cache will be used for updates
+#   2017-11-16 rik: adding 'macro-medium-security.oxt' LO extension
 #
 # ==============================================================================
 
@@ -273,6 +274,21 @@ echo
 echo "*** Installing/Updating Disable VBA Refactoring LO Extension"
 echo
 unopkg add --shared $DIR/disable-vba-refactoring.oxt
+
+# REMOVE macro-medium-security extension: only way to update is
+#   remove then reinstall
+EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/macro-medium-security.oxt* 2> /dev/null)
+
+if [ "$EXT_FOUND" ];
+then
+    unopkg remove --shared macro-medium-security.oxt
+fi
+
+# Install macro-medium-security.oxt
+echo
+echo "*** Installing/Updating Macro Medium Security LO Extension"
+echo
+unopkg add --shared $DIR/macro-medium-security.oxt
 
 # IF user has not initialized LibreOffice, then when adding the above shared
 #   extension, the user's LO settings are created, but owned by root so

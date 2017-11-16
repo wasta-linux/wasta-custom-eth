@@ -1,3 +1,11 @@
+wasta-custom-eth (1.2.12) xenial; urgency=medium
+
+  * macro-medium-security.oxt: installing by default so users will be
+    prompted to enable or disable macros when opening a file containing
+    macro.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 16 Nov 2017 15:45:13 +0300
+
 wasta-custom-eth (1.2.11) xenial; urgency=medium
 
   * EL: fix unicode point from 0128 to 0126 for H bar
