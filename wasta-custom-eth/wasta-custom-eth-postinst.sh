@@ -33,6 +33,10 @@
 #   2017-09-29 rik: disabling apt.conf.d/99nocache apt setting so that
 #       pfsense's squid cache will be used for updates
 #   2017-11-16 rik: adding 'macro-medium-security.oxt' LO extension
+#   2017-12-13 rik: removing LO 5.2 compatibility code
+#       - Adding LO 5.3 PPA
+#       - Adding skypeforlinux repo
+#       - Removing LO 5.2 PPA
 #
 # ==============================================================================
 
@@ -77,7 +81,7 @@ rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/KMFL SIL Ethiopic Rea
 rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
 
 # ------------------------------------------------------------------------------
-# Add LibreOffice 5.2 PPA
+# Adjust Software Sources
 # ------------------------------------------------------------------------------
 
 # get series, load them up.
@@ -89,7 +93,7 @@ case "$SERIES" in
     REPO_SERIES="trusty"
   ;;
 
-  xenial|sarah|serena|sonya)
+  xenial|sarah|serena|sonya|sylvia)
     #LTS 16.04-based Mint 18.x
     REPO_SERIES="xenial"
   ;;
@@ -138,75 +142,98 @@ then
     cp $APT_SOURCES $APT_SOURCES.save
 fi
 
-if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list ];
+# Add LO 5-3 Repository
+if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list ];
 then
     echo
-    echo "*** Adding LibreOffice 5.2 $REPO_SERIES PPA"
+    echo "*** Adding LibreOffice 5.3 $REPO_SERIES PPA"
     echo
-    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu $REPO_SERIES main" | \
-        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list
-    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu $REPO_SERIES main" | \
-        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list
+    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu $REPO_SERIES main" | \
+        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
+    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu $REPO_SERIES main" | \
+        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
 else
     # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
     echo
-    echo "*** LibreOffice 5.2 $REPO_SERIES PPA already exists, ensuring active"
+    echo "*** LibreOffice 5.3 $REPO_SERIES PPA already exists, ensuring active"
     echo
-    sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu '$REPO_SERIES' main' \
-        -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu '$REPO_SERIES' main@d' \
-        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2-$REPO_SERIES.list
+    sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu '$REPO_SERIES' main' \
+        -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu '$REPO_SERIES' main@d' \
+        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
+fi
+
+# Remove LO 5-2 Repository
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2*
+
+# Add Skype Repository
+if ! [ -e $APT_SOURCES_D/skype-stable.list ];
+then
+    echo
+    echo "*** Adding Skype Repository"
+    echo
+
+    echo "deb https://repo.skype.com/deb stable main" | \
+        tee $APT_SOURCES_D/skype-stable.list
+    
+    # manually add Skype repo key (since wasta-offline could be active)
+    apt-key add $DIR/keys/skype.gpg
 fi
 
 # ------------------------------------------------------------------------------
 # LibreOffice 5.2 FIX for ibus/kmfl not working correctly
 # ------------------------------------------------------------------------------
 
-for USER_HOME in /home/*;
-do
-    USER_HOME_NAME=$(basename $USER_HOME)
+#for USER_HOME in /home/*;
+#do
+#    USER_HOME_NAME=$(basename $USER_HOME)
+#
+#    # only process if "real user" (so not for wasta-remastersys, etc.)
+#    if id "$USER_HOME_NAME" >/dev/null 2>&1;
+#    then
+#        echo
+#        echo "*** ensuring LO ibus/kmfl functionality for $USER_HOME_NAME"
+#        echo
+#
+#        # ensure user applications folder exists
+#        mkdir -p $USER_HOME/.local/share/applications
+#
+#        # sleep needed to avoid race condition that was crashing cinnamon??
+#        sleep 2
+#
+#        # copy in LO desktop launchers
+#        cp /usr/share/applications/libreoffice-*.desktop \
+#            $USER_HOME/.local/share/applications
+#
+#        # ensure all ownership is correct
+#        chown -R $USER_HOME_NAME:$USER_HOME_NAME \
+#            $USER_HOME/.local/share/applications
+#
+#        # update LO desktop launchers to use modified env variables
+#        sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
+#            $USER_HOME/.local/share/applications/libreoffice-*.desktop
+#    fi
+#done
+#
+## /etc/skel updates:
+#echo
+#echo "*** ensuring LO ibus/kmfl functionality for default user profile"
+#echo
+#
+## ensure user applications folder exists
+#mkdir -p /etc/skel/.local/share/applications
+#
+## copy in LO desktop launchers
+#cp /usr/share/applications/libreoffice-*.desktop \
+#    /etc/skel/.local/share/applications
+#
+## update LO desktop launchers to use modified env variables
+#sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
+#    /etc/skel/.local/share/applications/libreoffice-*.desktop
 
-    # only process if "real user" (so not for wasta-remastersys, etc.)
-    if id "$USER_HOME_NAME" >/dev/null 2>&1;
-    then
-        echo
-        echo "*** ensuring LO ibus/kmfl functionality for $USER_HOME_NAME"
-        echo
-
-        # ensure user applications folder exists
-        mkdir -p $USER_HOME/.local/share/applications
-
-        # sleep needed to avoid race condition that was crashing cinnamon??
-        sleep 2
-
-        # copy in LO desktop launchers
-        cp /usr/share/applications/libreoffice-*.desktop \
-            $USER_HOME/.local/share/applications
-
-        # ensure all ownership is correct
-        chown -R $USER_HOME_NAME:$USER_HOME_NAME \
-            $USER_HOME/.local/share/applications
-
-        # update LO desktop launchers to use modified env variables
-        sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
-            $USER_HOME/.local/share/applications/libreoffice-*.desktop
-    fi
-done
-
-# /etc/skel updates:
-echo
-echo "*** ensuring LO ibus/kmfl functionality for default user profile"
-echo
-
-# ensure user applications folder exists
-mkdir -p /etc/skel/.local/share/applications
-
-# copy in LO desktop launchers
-cp /usr/share/applications/libreoffice-*.desktop \
-    /etc/skel/.local/share/applications
-
-# update LO desktop launchers to use modified env variables
-sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
-    /etc/skel/.local/share/applications/libreoffice-*.desktop
+# 2017-12-11 rik: Remove fixes since 5.2 has been patched and newer versions
+#   of LO will have trouble with kmfl IF the fix remains in place
+rm -f /home/*/.local/share/applications/libreoffice*.desktop
+rm -f /etc/skel/.local/share/applications/libreoffice*.desktop
 
 # ------------------------------------------------------------------------------
 # LibreOffice Preferences Extension install (for all users)

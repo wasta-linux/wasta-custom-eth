@@ -1,3 +1,11 @@
+wasta-custom-eth (1.2.13) xenial; urgency=medium
+
+  * postinst: added skype and LO 5.3 repos
+    - removed LO 5.2 ppa
+    - removed LO 5.2 ibus compatibility fixes
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 13 Dec 2017 11:25:20 +0300
+
 wasta-custom-eth (1.2.12) xenial; urgency=medium
 
   * macro-medium-security.oxt: installing by default so users will be
