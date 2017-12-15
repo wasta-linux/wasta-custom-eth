@@ -1,0 +1,10 @@
+Package: wasta-custom-eth
+Version: 1.2.13
+Architecture: all
+Maintainer: Rik Shaw <rikshaw76@gmail.com>
+Installed-Size: 9420
+Recommends: fonts-sil-abyssinica, ibus-gtk, ibus-gtk3, ibus-kmfl, skypeforlinux
+Section: utils
+Priority: optional
+Description: Wasta-Linux Ethiopia Customization
+ Sets up machine for Wasta-Linux Ethiopia use.
