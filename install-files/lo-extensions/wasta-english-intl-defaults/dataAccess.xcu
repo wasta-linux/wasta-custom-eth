@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- wasta-english-intl-defaults - dataAccess.xcu                            -->
+<!--                                                                         -->
+<!--    -Edit | Find and Replace: Disable Ignore Diacritics CTL              -->
+<!--                                                                         -->
+<!-- 2014-11-22 jcl: add dataAccess.xcu                                      -->
+<!--                                                                         -->
+<oor:component-data oor:name="DataAccess" oor:package="org.openoffice.Office"
+                    xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <node oor:name="FormSearchOptions">
+    <prop oor:name="IsIgnoreDiacritics_CTL"
+          oor:type="xs:boolean"
+          oor:finalized="false" >
+      <value>false</value>
+    </prop>
+  </node>
+
+</oor:component-data>

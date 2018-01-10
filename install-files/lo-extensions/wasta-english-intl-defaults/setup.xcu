@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- wasta-english-intl-defaults - setup.xcu                                 -->
+<!--                                                                         -->
+<!--    -Languages | Default Currency: Set to USD                            -->
+<!--    -Languages | Local Setting: en-GB                                    -->
+<!--    -Load/Save | Default Presentation Document Extension: impress8 (.odp)-->
+<!--    -Load/Save | Default Spreadsheet Document Ext.: MS Excel 97 (.xls)   -->
+<!--    -Load/Save | Default Text Document Extension: MS Word 97 (.doc)      -->
+<!--                                                                         -->
+<!-- 2014-11-06 rik: initial code                                            -->
+<!--                                                                         -->
+<oor:component-data oor:name="Setup" oor:package="org.openoffice"
+                    xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <node oor:name="L10N">
+    <prop oor:name="ooSetupCurrency"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>USD-en-US</value>
+    </prop>
+  </node>
+  <node oor:name="L10N">
+    <prop oor:name="ooSetupSystemLocale"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>en-GB</value>
+    </prop>
+  </node>
+  <node oor:name="Office">
+    <node oor:name="Factories">
+      <node oor:name="com.sun.star.presentation.PresentationDocument">
+        <prop oor:name="ooSetupFactoryDefaultFilter"
+              oor:type="xs:string"
+              oor:finalized="false" >
+          <value>impress8</value>
+        </prop>
+      </node>
+      <node oor:name="com.sun.star.sheet.SpreadsheetDocument">
+        <prop oor:name="ooSetupFactoryDefaultFilter"
+              oor:type="xs:string"
+              oor:finalized="false" >
+          <value>MS Excel 97</value>
+        </prop>
+      </node>
+      <node oor:name="com.sun.star.text.TextDocument">
+        <prop oor:name="ooSetupFactoryDefaultFilter"
+              oor:type="xs:string"
+              oor:finalized="false" >
+          <value>MS Word 97</value>
+        </prop>
+      </node>
+    </node>
+  </node>
+
+</oor:component-data>

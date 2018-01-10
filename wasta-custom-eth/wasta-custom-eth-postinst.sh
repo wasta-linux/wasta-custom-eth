@@ -37,6 +37,9 @@
 #       - Adding LO 5.3 PPA
 #       - Adding skypeforlinux repo
 #       - Removing LO 5.2 PPA
+#   2018-01-10 rik: removing LO extensions (now installed through install-files)
+#       - Adding skype gpg key
+#       - if wasta-layout found, setting system default layout to "redmond7"
 #
 # ==============================================================================
 
@@ -64,6 +67,31 @@ echo
 # setup directory for reference later
 DIR=/usr/share/wasta-custom-eth/resources
 
+# get series, load them up.
+SERIES=$(lsb_release -sc)
+case "$SERIES" in
+
+  trusty|qiana|rebecca|rafaela|rosa)
+    #LTS 14.04-based Mint 17.x
+    REPO_SERIES="trusty"
+  ;;
+
+  xenial|sarah|serena|sonya|sylvia)
+    #LTS 16.04-based Mint 18.x
+    REPO_SERIES="xenial"
+  ;;
+
+  bionic)
+    #LTS 18.04-based Mint 19.x
+    REPO_SERIES="bionic"
+  ;;
+
+  *)
+    # Don't know the series, just go with what is reported
+    REPO_SERIES=$SERIES
+  ;;
+esac
+
 # ------------------------------------------------------------------------------
 # Create some Symlinks
 # ------------------------------------------------------------------------------
@@ -83,26 +111,6 @@ rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard
 # ------------------------------------------------------------------------------
 # Adjust Software Sources
 # ------------------------------------------------------------------------------
-
-# get series, load them up.
-SERIES=$(lsb_release -sc)
-case "$SERIES" in
-
-  trusty|qiana|rebecca|rafaela|rosa)
-    #LTS 14.04-based Mint 17.x
-    REPO_SERIES="trusty"
-  ;;
-
-  xenial|sarah|serena|sonya|sylvia)
-    #LTS 16.04-based Mint 18.x
-    REPO_SERIES="xenial"
-  ;;
-
-  *)
-    # Don't know the series, just go with what is reported
-    REPO_SERIES=$SERIES
-  ;;
-esac
 
 APT_SOURCES=/etc/apt/sources.list
 
@@ -174,9 +182,20 @@ then
 
     echo "deb https://repo.skype.com/deb stable main" | \
         tee $APT_SOURCES_D/skype-stable.list
-    
-    # manually add Skype repo key (since wasta-offline could be active)
-    apt-key add $DIR/keys/skype.gpg
+fi
+
+# manually add Skype repo key (since wasta-offline could be active)
+apt-key add $DIR/keys/skype.gpg
+
+# ------------------------------------------------------------------------------
+# Set Wasta-Layout default
+# ------------------------------------------------------------------------------
+if [ -e "/usr/bin/wasta-layout" ];
+then
+    echo
+    echo "*** Setting Wasta-Layout default to redmond7"
+    echo
+    wasta-layout-system redmond7
 fi
 
 # ------------------------------------------------------------------------------
@@ -237,6 +256,8 @@ rm -f /etc/skel/.local/share/applications/libreoffice*.desktop
 
 # ------------------------------------------------------------------------------
 # LibreOffice Preferences Extension install (for all users)
+# LEGACY: now install extensions through install-files/extensions so am removing
+#   ones installed previously using unopkg
 # ------------------------------------------------------------------------------
 
 # REMOVE "Wasta-English-Intl-Defaults" extension: remove / reinstall is only
@@ -248,22 +269,12 @@ then
     unopkg remove --shared wasta-english-intl-defaults.oxt
 fi
 
-# Install wasta-english-intl-defaults.oxt (Default LibreOffice Preferences)
-echo
-echo "*** Installing/Updating Wasta English Intl Default LO Extension"
-echo
-unopkg add --shared $DIR/wasta-english-intl-defaults.oxt
-
-
-# LEGACY REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
+# REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
 # Send error to null so won't display
 EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-hunspell.oxt* 2> /dev/null)
 
 if [ "$EXT_FOUND" ];
 then
-    echo
-    echo "*** LEGACY: Removing older 'Amharic-Hunspell' LO Extension"
-    echo
     unopkg remove --shared amharic-hunspell.oxt
 fi
 
@@ -276,17 +287,6 @@ then
     unopkg remove --shared amharic-ethiopia-customization.oxt
 fi
 
-# Install amharic-ethiopia-customization.oxt
-echo
-echo "*** Installing/Updating Amharic Ethiopia Customization LO Extension"
-echo
-unopkg add --shared $DIR/amharic-ethiopia-customization.oxt
-
-# IF user has not initialized LibreOffice, then when adding the above shared
-#   extension, the user's LO settings are created, but owned by root so
-#   they can't change them: solution is to just remove them (will get recreated
-#   when user starts LO the first time).
-
 # REMOVE "Disable VBA Refactoring" extension: only way to update is
 #   remove then reinstall
 EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/disable-vba-refactoring.oxt* 2> /dev/null)
@@ -295,12 +295,6 @@ if [ "$EXT_FOUND" ];
 then
     unopkg remove --shared disable-vba-refactoring.oxt
 fi
-
-# Install disable-vba-refactoring.oxt
-echo
-echo "*** Installing/Updating Disable VBA Refactoring LO Extension"
-echo
-unopkg add --shared $DIR/disable-vba-refactoring.oxt
 
 # REMOVE macro-medium-security extension: only way to update is
 #   remove then reinstall
@@ -311,17 +305,10 @@ then
     unopkg remove --shared macro-medium-security.oxt
 fi
 
-# Install macro-medium-security.oxt
-echo
-echo "*** Installing/Updating Macro Medium Security LO Extension"
-echo
-unopkg add --shared $DIR/macro-medium-security.oxt
-
 # IF user has not initialized LibreOffice, then when adding the above shared
 #   extension, the user's LO settings are created, but owned by root so
 #   they can't change them: solution is to just remove them (will get recreated
 #   when user starts LO the first time).
-
 
 for LO_FOLDER in /home/*/.config/libreoffice;
 do
@@ -470,7 +457,7 @@ esac
 echo
 
 # ------------------------------------------------------------------------------
-# Disable any apt.conf.d "nocache" file (from wasta-core-xenial)
+# Disable any apt.conf.d "nocache" file (from wasta-core)
 # ------------------------------------------------------------------------------
 # The nocache option for apt prevents local cache from squid (used by pfsense
 # at main Addis office) from being used.  Need to disable.

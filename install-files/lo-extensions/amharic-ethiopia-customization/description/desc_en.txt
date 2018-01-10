@@ -1,0 +1,7 @@
+This extension enables CTL, sets Amharic as the default CTL language, and sets Abyssinica SIL as the default CTL font.
+
+Additionally, an Amharic Hunspell dictionary is included.  The dictionary was obtained from Firefox extension at this location:
+
+https://addons.mozilla.org/en-us/firefox/addon/amharic-spell-checker
+
+am_ET.dic and am_ET.aff were extracted from this Firefox add-on and packaged as a LibreOffice Amharic Hunspell dictionary.

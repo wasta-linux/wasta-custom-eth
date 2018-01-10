@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- wasta-english-intl-defaults - common.xcu                                -->
+<!--                                                                         -->
+<!--    -AutoCorrect [T]: Disable Capitalize first letter of every sentence  -->
+<!--    -AutoCorrect [T]: Disable Replace dashes                             -->
+<!--    -AutoCorrect [T]: Disable Automatic *bold* and _underline_           -->
+<!--    -AutoCorrect [T]: Disable Correct TWo INitial CApitals               -->
+<!--    -Memory Graphics Cache: Change to 100MB                              -->
+<!--                                                                         -->
+<!-- 2014-11-06 rik: initial code                                            -->
+<!-- 2014-11-22 jcl: add disabling Ignore Diacritics and adding finalized    -->
+<!--                                                                         -->
+<oor:component-data oor:name="Common" oor:package="org.openoffice.Office"
+                    xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <node oor:name="AutoCorrect">
+    <prop oor:name="CapitalAtStartSentence" 
+          oor:type="xs:boolean"
+          oor:finalized="false">
+      <value>false</value>
+    </prop>
+    <prop oor:name="ChangeDash"
+          oor:type="xs:boolean"
+          oor:finalized="false">
+      <value>false</value>
+    </prop>
+    <prop oor:name="ChangeUnderlineWeight"
+          oor:type="xs:boolean"
+          oor:finalized="false">
+      <value>false</value>
+    </prop>
+    <prop oor:name="TwoCapitalsAtStart"
+          oor:type="xs:boolean"
+          oor:finalized="false">
+      <value>false</value>
+    </prop>
+    <node oor:name="Exceptions">
+      <prop oor:name="CapitalAtStartSentence"
+            oor:type="xs:boolean"
+            oor:finalized="false">
+        <value>true</value>
+      </prop>
+      <prop oor:name="TwoCapitalsAtStart"
+            oor:type="xs:boolean"
+            oor:finalized="false">
+        <value>true</value>
+      </prop>
+    </node>
+  </node>
+  <node oor:name="Cache">
+    <node oor:name="GraphicManager">
+      <prop oor:name="TotalCacheSize"
+            oor:type="xs:int"
+            oor:finalized="false">
+        <value>104857600</value>
+      </prop>
+    </node>
+  </node>
+  <node oor:name="SearchOptions">
+    <prop oor:name="IsIgnoreDiacritics_CTL"
+          oor:type="xs:boolean"
+          oor:finalized="false">
+      <value>false</value>
+    </prop>
+  </node>
+
+</oor:component-data>

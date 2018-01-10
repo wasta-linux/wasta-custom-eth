@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- wasta-english-intl-defaults - writer.xcu                                -->
+<!--                                                                         -->
+<!--    -AutoCorrect [M]: Disable Capitalize first letter of every sentence  -->
+<!--    -AutoCorrect [M]: Disable Replace dashes                             -->
+<!--    -AutoCorrect [M]: Disable Automatic *bold* and _underline_           -->
+<!--    -AutoCorrect [M]: Disable Correct TWo INitial CApitals               -->
+<!--    -Basic Fonts (Western): Times New Roman                              -->
+<!--        (Caption, Heading, Index, List, Std)                             -->
+<!--    -Basic Fonts (CTL): Times New Roman                                  -->
+<!--        (Caption, Heading, Index, List, Std)                             -->
+<!--    -General | MeasureUnit: Centimeters (2)                              -->
+<!--    -View | Ruler | HorizontalRulerUnit: Centimeters (2)                 -->
+<!--    -View | Ruler | VerticalRulerUnit: Centimeters (2)                   -->
+<!--                                                                         -->
+<!-- 2014-11-06 rik: initial code                                            -->
+<!--                                                                         -->
+<oor:component-data oor:name="Writer" oor:package="org.openoffice.Office"
+                    xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <node oor:name="AutoFunction">
+    <node oor:name="Format">
+      <node oor:name="ByInput">
+        <prop oor:name="ChangeDash"
+              oor:type="xs:boolean"
+              oor:finalized="false">
+          <value>false</value>
+        </prop>
+      </node>
+      <node oor:name="Option">
+        <prop oor:name="CapitalAtStartSentence"
+              oor:type="xs:boolean"
+              oor:finalized="false" >
+          <value>false</value>
+        </prop>
+        <prop oor:name="ChangeDash"
+              oor:type="xs:boolean"
+              oor:finalized="false" >
+          <value>false</value>
+        </prop>
+        <prop oor:name="ChangeUnderlineWeight"
+              oor:type="xs:boolean"
+              oor:finalized="false" >
+          <value>false</value>
+        </prop>
+        <prop oor:name="TwoCapitalsAtStart"
+              oor:type="xs:boolean"
+              oor:finalized="false" >
+          <value>false</value>
+        </prop>
+      </node>
+    </node>
+  </node>
+  <node oor:name="DefaultFont">
+    <prop oor:name="Caption"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="Heading"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="Index"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="List"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="Standard"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+  </node>
+  <node oor:name="DefaultFontCTL">
+    <prop oor:name="Caption"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="Heading"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="Index"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="List"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+    <prop oor:name="Standard"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>Times New Roman</value>
+    </prop>
+  </node>
+  <node oor:name="Layout">
+    <node oor:name="Other">
+      <prop oor:name="MeasureUnit"
+            oor:type="xs:int"
+            oor:finalized="false" >
+        <value>2</value>
+      </prop>
+    </node>
+    <node oor:name="Window">
+      <prop oor:name="HorizontalRulerUnit"
+            oor:type="xs:int"
+            oor:finalized="false" >
+        <value>2</value>
+      </prop>
+      <prop oor:name="VerticalRulerUnit"
+            oor:type="xs:int"
+            oor:finalized="false" >
+        <value>2</value>
+      </prop>
+    </node>
+  </node>
+
+</oor:component-data>

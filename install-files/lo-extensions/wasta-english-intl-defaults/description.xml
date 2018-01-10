@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- wasta-english-intl-defaults - Wasta-Linux English Intl Default          -->
+<!--     Settings (ODF File Extensions)                                      -->
+<!--                                                                         -->
+<!-- 2014-11-06 rik: initial code                                            -->
+<!-- 2014-11-22 jcl(1.0.3): add isIgnoreDiacritics_CTL and Automatic Updates -->
+<!-- 2014-12-22 jcl(1.0.3.1):add oor:finalized="false"                       -->
+<!--                                                                         -->
+<description xmlns="http://openoffice.org/extensions/description/2006"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:lo="http://libreoffice.org/extensions/description/2011">
+
+    <version value="1.0.3.1"/>
+
+    <identifier value="net.launchpad.wasta-linux.libreoffice.extensions.wasta-english-intl-odf-defaults"/>
+
+    <platform value="all" />
+
+    <publisher>
+        <name lang="en" xlink:href="https://launchpad.net/~wasta-linux">Wasta-Linux Team</name>
+    </publisher>
+
+    <display-name>
+       <name lang="en">Wasta-Linux English (Intl) Default Settings</name>
+    </display-name>
+
+     <icon>
+       <default xlink:href="images/wasta-linux-32.png" />
+       <high-contrast xlink:href="images/wasta-linux-32.png" />
+     </icon>
+
+    <extension-description>
+        <src xlink:href="description/desc_en.txt" lang="en" />
+    </extension-description>
+
+</description>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- macro-medium-security - common.xcu                                      -->
+<!--                                                                         -->
+<!-- 2017-11-16 rik: initial code                                            -->
+<!--                                                                         -->
+<oor:component-data oor:name="Common" oor:package="org.openoffice.Office"
+                    xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <node oor:name="Security">
+    <node oor:name="Scripting">
+      <prop oor:name="MacroSecurityLevel"
+            oor:type="xs:int"
+            oor:finalized="false">
+        <value>1</value>
+      </prop>
+    </node>
+  </node>
+
+  <node oor:name="Security">
+    <node oor:name="Scripting">
+      <prop oor:name="DisableMacrosExecution"
+            oor:type="xs:boolean"
+            oor:finalized="false">
+        <value>false</value>
+      </prop>
+    </node>
+  </node>
+
+</oor:component-data>

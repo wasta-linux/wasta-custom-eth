@@ -1,0 +1,37 @@
+Sets default settings to Wasta-Linux English (International) preferred options.
+
+common.xcu changes:
+    -AutoCorrect [T]: Disable Capitalize first letter of every sentence
+    -AutoCorrect [T]: Disable Replace dashes
+    -AutoCorrect [T]: Disable Automatic *bold* and _underline_
+    -AutoCorrect [T]: Disable Correct TWo INitial CApitals
+    -Memory Graphics Cache: Change to 100MB
+    -Edit | Find and Replace: Disable Ignore Diacritics CTL
+
+dataAccess.xcu changes:
+    -Edit | Find and Replace: Disable Ignore Diacritics CTL
+
+linguistic.xcu changes:
+    -Languages | Default Western: Set to "None" (This way spellcheck won't flag
+        all words of Vernacular Languages.  Instead, user will need to set
+        Language on a per-document basis for spellcheck to work.)
+
+setup.xcu changes:
+    -Languages | Default Currency: Set to USD
+    -Languages | Local Setting: en-GB
+    -Load/Save | Default Presentation Document Extension: impress8 (.odp)
+    -Load/Save | Default Spreadsheet Document Extension: MS Excel 97 (.xls)
+    -Load/Save | Default Text Document Extension: MS Word 97 (.doc)
+
+writer.xcu changes:
+    -AutoCorrect [M]: Disable Capitalize first letter of every sentence
+    -AutoCorrect [M]: Disable Replace dashes
+    -AutoCorrect [M]: Disable Automatic *bold* and _underline_
+    -AutoCorrect [M]: Disable Correct TWo INitial CApitals
+    -Basic Fonts (Western): Times New Roman (Caption, Heading, Index, List, Std)
+    -General | MeasureUnit: Centimeters (2)
+    -View | Ruler | HorizontalRulerUnit: Centimeters (2)
+    -View | Ruler | VerticalRulerUnit: Centimeters (2)
+
+jobs.xcu changes:
+    -Online Updates: Disable check for updates automatically

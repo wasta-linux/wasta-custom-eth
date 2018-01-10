@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- Amharic-Ethiopia-Customization LibreOffice Extension                    -->
+<!--                                                                         -->
+<!-- 2015-07-16 rik: initial code                                            -->
+<!-- 2015-09-09 rik: renamed to amharic-ethiopia-customization               -->
+<!--   - writer.xcu: set default CTL fonts to Abyssinica SIL                 -->
+<!--   - common.xcu: enabled CTL by default                                  -->
+<!--                                                                         -->
+<description xmlns="http://openoffice.org/extensions/description/2006"
+        xmlns:d="http://openoffice.org/extensions/description/2006"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <version value="1.0" />
+
+    <identifier value="org.libreoffice.amharic-ethiopia-customization" />
+
+    <display-name>
+        <name lang="en">Amharic Ethiopia Customization</name>
+    </display-name>
+
+    <platform value="all" />
+
+    <publisher>
+        <name lang="en" xlink:href="https://launchpad.net/~wasta-linux">Wasta-Linux Team</name>
+    </publisher>
+
+     <icon>
+       <default xlink:href="images/am_ET.png" />
+       <high-contrast xlink:href="images/am_ET.png" />
+     </icon>
+
+    <extension-description>
+        <src xlink:href="description/desc_en.txt" lang="en" />
+    </extension-description>
+
+</description>

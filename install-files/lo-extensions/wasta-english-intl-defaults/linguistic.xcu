@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- wasta-english-intl-defaults - linguistic.xcu                            -->
+<!--                                                                         -->
+<!--    -Languages | Default Western: Set to "None"                          -->
+<!--       (This way spellcheck will not flag all words of Vernacular        -->
+<!--        Languages.  Instead, the user will need to set Language on a     -->
+<!--        per-document basis for spellcheck to work.)                      -->
+<!--                                                                         -->
+<!-- 2014-11-06 rik: initial code                                            -->
+<!--                                                                         -->
+<oor:component-data oor:name="Linguistic" oor:package="org.openoffice.Office"
+                    xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <node oor:name="General">
+    <prop oor:name="DefaultLocale"
+          oor:type="xs:string"
+          oor:finalized="false" >
+      <value>zxx</value>
+    </prop>
+  </node>
+
+</oor:component-data>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                                                         -->
+<!-- wasta-english-intl-defaults - manifest.xml                              -->
+<!--                                                                         -->
+<!-- 2014-11-06 rik: initial code                                            -->
+<!-- 2015-01-26 rik: adding dataAccess, jobs                                 -->
+<!--                                                                         -->
+<!DOCTYPE manifest:manifest PUBLIC "-//OpenOffice.org//DTD Manifest 1.0//EN" "Manifest.dtd">
+<manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest">
+    <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+                          manifest:full-path="common.xcu"/>
+    <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+                          manifest:full-path="linguistic.xcu"/>
+    <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+                          manifest:full-path="setup.xcu"/>
+    <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+                          manifest:full-path="writer.xcu"/>
+    <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+                          manifest:full-path="dataAccess.xcu"/>
+    <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+                          manifest:full-path="jobs.xcu"/>
+</manifest:manifest>

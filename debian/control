@@ -7,7 +7,7 @@ Standards-Version: 3.9.5
 
 Package: wasta-custom-eth
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: gpg, ${shlibs:Depends}, ${misc:Depends}
 Recommends: fonts-sil-abyssinica, ibus-gtk, ibus-gtk3, ibus-kmfl, skypeforlinux
 Description: Wasta-Linux Ethiopia Customization
  Sets up machine for Wasta-Linux Ethiopia use.
