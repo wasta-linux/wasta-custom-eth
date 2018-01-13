@@ -1,5 +1,5 @@
+install-files/extensions         usr/lib/libreoffice/share
 install-files/fonts              usr/share
 install-files/kmfl               usr/share
-install-files/extensions         usr/lib/libreoffice/share
 install-files/wasta-resources    usr/share
 wasta-custom-eth                 usr/share
