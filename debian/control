@@ -3,11 +3,11 @@ Section: utils
 Priority: optional
 Maintainer: Rik Shaw <rikshaw76@gmail.com>
 Build-Depends: debhelper (>= 9.0.0)
-Standards-Version: 3.9.5
+Standards-Version: 3.9.7
 
 Package: wasta-custom-eth
 Architecture: all
-Depends: gpg, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: fonts-sil-abyssinica, ibus-gtk, ibus-gtk3, ibus-kmfl, skypeforlinux
 Description: Wasta-Linux Ethiopia Customization
  Sets up machine for Wasta-Linux Ethiopia use.
