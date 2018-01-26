@@ -40,6 +40,8 @@
 #   2018-01-10 rik: removing LO extensions (now installed through install-files)
 #       - Adding skype gpg key
 #       - if wasta-layout found, setting system default layout to "redmond7"
+#   2018-01-25 rik: making sure to only install LO 5.3 PPA for trusty/xenial
+#       since it doesn't exist for bionic.
 #
 # ==============================================================================
 
@@ -150,27 +152,31 @@ then
     cp $APT_SOURCES $APT_SOURCES.save
 fi
 
-# Add LO 5-3 Repository
-if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list ];
+# For xenial and trusty: Add LO 5-3 Repository
+if [ "$REPO_SERIES" == "trusty" ] || [ "$REPO_SERIES" == "xenial" ];
 then
-    echo
-    echo "*** Adding LibreOffice 5.3 $REPO_SERIES PPA"
-    echo
-    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu $REPO_SERIES main" | \
-        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
-    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu $REPO_SERIES main" | \
-        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
-else
-    # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
-    echo
-    echo "*** LibreOffice 5.3 $REPO_SERIES PPA already exists, ensuring active"
-    echo
-    sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu '$REPO_SERIES' main' \
-        -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu '$REPO_SERIES' main@d' \
-        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
+    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list ];
+    then
+        echo
+        echo "*** Adding LibreOffice 5.3 $REPO_SERIES PPA"
+        echo
+        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu $REPO_SERIES main" | \
+            tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
+        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu $REPO_SERIES main" | \
+            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
+    else
+        # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
+        echo
+        echo "*** LibreOffice 5.3 $REPO_SERIES PPA already exists, ensuring active"
+        echo
+        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu '$REPO_SERIES' main' \
+            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu '$REPO_SERIES' main@d' \
+            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-$REPO_SERIES.list
+    fi
 fi
 
-# Remove LO 5-2 Repository
+# Remove older LO PPAs
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2*
 
 # Add Skype Repository
