@@ -1,3 +1,9 @@
+wasta-custom-eth (1.3.4) xenial; urgency=medium
+
+  * kmfl: adding ǵ and Ǵ to EL keyboard  
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 16 Mar 2018 15:01:01 +0300
+
 wasta-custom-eth (1.3.3) xenial; urgency=medium
 
   * postinst: only add LO 5.3 PPA for trusty/xenial since doesn't

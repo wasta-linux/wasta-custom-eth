@@ -1,7 +1,7 @@
 ﻿store(&VERSION) '7.0'
 store(&NAME) 'SIL EL - Ethiopian Latin'
 store(&TARGETS) 'windows macosx linux'
-store(&KEYBOARDVERSION) '1.3.0'
+store(&KEYBOARDVERSION) '1.3.1'
 store(&ETHNOLOGUECODE) 'amf bcq gmv gof guk gwd kqy kxc mdx moy mpe suq tsb wal'
 store(&BITMAP) 'sil_el_ethiopian_latin.bmp'
 store(&COPYRIGHT) '© 2017-2018 SIL Ethiopia'
@@ -164,6 +164,9 @@ U+0245 + "1" > U+0245 U+0301 c Ʌ́
 U+025B + "1" > U+025B U+0301 c ɛ́
 U+0190 + "1" > U+0190 U+0301 c Ɛ́
 
+"g"    + "1" > U+0067 U+0301 c ǵ
+"G"    + "1" > U+0047 U+0301 c Ǵ
+
 U+0268 + "1" > U+0268 U+0301 c ɨ́
 U+0197 + "1" > U+0197 U+0301 c Ɨ́
 
@@ -305,11 +308,11 @@ c ------------------------------------------------------------------------------
 "e"    + "7" > U+0065 U+030B c e̋
 "E"    + "7" > U+0045 U+030B c E̋
 
-U+0268 + "7" > U+0268 U+030B c ɨ̋
-U+0197 + "7" > U+0197 U+030B c Ɨ̋
-
 "i"    + "7" > U+0069 U+030B c i̋
 "I"    + "7" > U+0049 U+030B c I̋
+
+U+0268 + "7" > U+0268 U+030B c ɨ̋
+U+0197 + "7" > U+0197 U+030B c Ɨ̋
 
 "o"    + "7" > U+0151        c ő
 "O"    + "7" > U+0150        c Ő
