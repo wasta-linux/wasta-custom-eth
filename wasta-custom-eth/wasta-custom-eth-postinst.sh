@@ -44,6 +44,7 @@
 #       since it doesn't exist for bionic.
 #   2018-08-29 rik: adding LO 6.0 PPA
 #       - adding bionic hp-plugin support
+#   2018-08-29 rik: permissions cleanup for files associated with ibus setup
 #
 # ==============================================================================
 
@@ -365,8 +366,19 @@ done
 for CURRENT_USER in $LOCAL_USERS;
 do
     # not sure why these are owned by root sometimes but shouldn't be
-    chown -R $CURRENT_USER:$CURRENT_USER /home/$CURRENT_USER/.config/ibus
-    chown -R $CURRENT_USER:$CURRENT_USER /home/$CURRENT_USER/.cache/dconf
+    PERM_CHECK="/home/$CURRENT_USER/.config/ibus"
+    if [ -e "$PERM_CHECK" ];
+    then
+        echo reset owner of $PERM_CHECK
+        chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
+    fi
+
+    PERM_CHECK="/home/$CURRENT_USER/.cache/dconf"
+    if [ -e "$PERM_CHECK" ];
+    then
+        echo reset owner of $PERM_CHECK
+        chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
+    fi
 
     # need to know if need to start dbus for user
     # don't use dbus-run-session for logged in user or it doesn't work
@@ -408,7 +420,7 @@ do
         echo
         # append engine to list
         IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn']@" <<<"$IBUS_ENGINES")
-    fi
+    fidsfdasf
 
     POWERG_INSTALLED=$(grep sil_ethiopic_power_g.kmn <<<"$IBUS_ENGINES")
     if [[ -z "$POWERG_INSTALLED" ]];
@@ -434,7 +446,10 @@ do
     su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings set org.freedesktop.ibus.general preload-engines \"$IBUS_ENGINES\"" >/dev/null 2>&1
 
     # restart ibus
-    su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" >/dev/null 2>&1
+    su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" #>/dev/null 2>&1
+    echo
+    echo "*** ibus restarted: if any keyboard issues please logout/login"
+    echo
 done
  
 # ------------------------------------------------------------------------------
