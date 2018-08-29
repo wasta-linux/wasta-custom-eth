@@ -1,3 +1,10 @@
+wasta-custom-eth (1.4.0) bionic; urgency=medium
+
+  * postinst: adding LO 6.0 PPA
+    - adding bionic hp-plugin
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 29 Aug 2018 08:26:21 +0300
+
 wasta-custom-eth (1.3.5) xenial; urgency=medium
 
   * AndinetLines3.ttf: added support for NBSP (00A0) and other
