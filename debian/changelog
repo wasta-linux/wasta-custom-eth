@@ -1,3 +1,9 @@
+wasta-custom-eth (1.4.1) bionic; urgency=medium
+
+  * postinst: correcting hp-plugin case statement for bionic
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 29 Aug 2018 08:30:29 +0300
+
 wasta-custom-eth (1.4.0) bionic; urgency=medium
 
   * postinst: adding LO 6.0 PPA

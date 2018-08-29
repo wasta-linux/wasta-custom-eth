@@ -463,7 +463,7 @@ case "$REPO_SERIES" in
     yes | hp-plugin -p $DIR/hp-plugin-xenial/ >/dev/null 2>&1
     echo "*** xenial: hp-plugin install complete"
   ;;
-  xenial)
+  bionic)
     echo
     echo "*** bionic: installing hp-plugin"
     yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
