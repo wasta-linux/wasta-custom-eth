@@ -481,7 +481,7 @@ case "$REPO_SERIES" in
   bionic)
     echo
     echo "*** bionic: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-bionic/ #>/dev/null 2>&1
+    yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
     echo "*** bionic: hp-plugin install complete"
   ;;
 esac
