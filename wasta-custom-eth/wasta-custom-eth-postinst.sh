@@ -369,14 +369,14 @@ do
     PERM_CHECK="/home/$CURRENT_USER/.config/ibus"
     if [ -e "$PERM_CHECK" ];
     then
-        echo reset owner of $PERM_CHECK
+        echo "*** reset owner of $PERM_CHECK"
         chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
     fi
 
     PERM_CHECK="/home/$CURRENT_USER/.cache/dconf"
     if [ -e "$PERM_CHECK" ];
     then
-        echo reset owner of $PERM_CHECK
+        echo "*** reset owner of $PERM_CHECK"
         chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
     fi
 
@@ -420,7 +420,7 @@ do
         echo
         # append engine to list
         IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn']@" <<<"$IBUS_ENGINES")
-    fidsfdasf
+    fi
 
     POWERG_INSTALLED=$(grep sil_ethiopic_power_g.kmn <<<"$IBUS_ENGINES")
     if [[ -z "$POWERG_INSTALLED" ]];
@@ -446,12 +446,12 @@ do
     su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings set org.freedesktop.ibus.general preload-engines \"$IBUS_ENGINES\"" >/dev/null 2>&1
 
     # restart ibus
-    su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" #>/dev/null 2>&1
+    su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" >/dev/null 2>&1
     echo
     echo "*** ibus restarted: if any keyboard issues please logout/login"
     echo
 done
- 
+
 # ------------------------------------------------------------------------------
 # Set system-wide Paper Size
 # ------------------------------------------------------------------------------
@@ -481,7 +481,7 @@ case "$REPO_SERIES" in
   bionic)
     echo
     echo "*** bionic: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
+    yes | hp-plugin -p $DIR/hp-plugin-bionic/ #>/dev/null 2>&1
     echo "*** bionic: hp-plugin install complete"
   ;;
 esac
