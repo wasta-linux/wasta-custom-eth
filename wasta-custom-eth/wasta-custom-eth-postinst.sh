@@ -45,6 +45,7 @@
 #   2018-08-29 rik: adding LO 6.0 PPA
 #       - adding bionic hp-plugin support
 #   2018-08-29 rik: permissions cleanup for files associated with ibus setup
+#       - quiet output of gpg key additions
 #
 # ==============================================================================
 
@@ -195,8 +196,9 @@ then
         tee $APT_SOURCES_D/skype-stable.list
 fi
 
-# manually add Skype repo key (since wasta-offline could be active)
-apt-key add $DIR/keys/skype.gpg
+# manually add Skype and LO repo keys (since wasta-offline could be active)
+apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
+apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
 
 # ------------------------------------------------------------------------------
 # Set Wasta-Layout default

@@ -1,3 +1,9 @@
+wasta-custom-eth (1.4.4) bionic; urgency=medium
+
+  * postinst: suppress output of gpg key additions
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 31 Aug 2018 10:16:18 +0300
+
 wasta-custom-eth (1.4.3) bionic; urgency=medium
 
   * postinst: fix typo in 'fi' statement, add hp-plugin bionic to git
