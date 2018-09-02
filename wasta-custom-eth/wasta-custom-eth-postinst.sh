@@ -46,6 +46,8 @@
 #       - adding bionic hp-plugin support
 #   2018-08-29 rik: permissions cleanup for files associated with ibus setup
 #       - quiet output of gpg key additions
+#   2018-09-01 rik: restarting ibus in different way so as to not require
+#       logout (otherwise cinnamon menu couldn't be typed in)
 #
 # ==============================================================================
 
@@ -78,17 +80,17 @@ SERIES=$(lsb_release -sc)
 case "$SERIES" in
 
   trusty|qiana|rebecca|rafaela|rosa)
-    #LTS 14.04-based Mint 17.x
+    #Ubuntu 14.04 or Mint 17.x
     REPO_SERIES="trusty"
   ;;
 
   xenial|sarah|serena|sonya|sylvia)
-    #LTS 16.04-based Mint 18.x
+    #Ubuntu 16.04 or Mint 18.x
     REPO_SERIES="xenial"
   ;;
 
   bionic|tara)
-    #LTS 18.04-based Mint 19.x
+    #Ubuntu 18.04 or Mint 19.x
     REPO_SERIES="bionic"
   ;;
 
@@ -156,6 +158,10 @@ then
     cp $APT_SOURCES $APT_SOURCES.save
 fi
 
+# manually add Skype and LO repo keys (since wasta-offline could be active)
+apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
+apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
+
 # For bionic, xenial, trusty: Add LO 6-0 Repository
 if [ "$REPO_SERIES" == "trusty" ] || [ "$REPO_SERIES" == "xenial" ] || [ "$REPO_SERIES" == "bionic" ];
 then
@@ -169,7 +175,7 @@ then
         echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-0/ubuntu $REPO_SERIES main" | \
             tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0-$REPO_SERIES.list
     else
-        # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
+        # found, but ensure LO 6-0 PPA ACTIVE (user could have accidentally disabled)
         echo
         echo "*** LibreOffice 6.0 $REPO_SERIES PPA already exists, ensuring active"
         echo
@@ -195,10 +201,6 @@ then
     echo "deb https://repo.skype.com/deb stable main" | \
         tee $APT_SOURCES_D/skype-stable.list
 fi
-
-# manually add Skype and LO repo keys (since wasta-offline could be active)
-apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
-apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
 
 # ------------------------------------------------------------------------------
 # Set Wasta-Layout default
@@ -394,6 +396,10 @@ do
         DBUS_SESSION="dbus-run-session --"
     fi
 
+# 2018-09-01 rik: ibus is getting 'hung' a bit so doesn't work in cinnamon menu
+#   after restarted below.  wondering if need different dbus method like used
+#   in wasta-login.sh??? needs testing...
+
     IBUS_ENGINES=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general preload-engines")
     ENGINES_ORDER=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general engines-order")
 
@@ -445,10 +451,16 @@ do
     fi
 
     # set engines
-    su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings set org.freedesktop.ibus.general preload-engines \"$IBUS_ENGINES\"" >/dev/null 2>&1
+    su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings set org.freedesktop.ibus.general preload-engines \"$IBUS_ENGINES\"" #>/dev/null 2>&1
 
     # restart ibus
-    su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" >/dev/null 2>&1
+    ibus-daemon -xrd
+
+    #2018-09-01 rik: previously used one of below commands but they resulted
+    #   in various GUI elements needing to be restarted before keyboard would
+    #   function (such as Cinnamon Menu).
+    #su "$CURRENT_USER" -c "dbus-launch ibus-daemon -xrd" #>/dev/null 2>&1
+    #su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" #>/dev/null 2>&1
     echo
     echo "*** ibus restarted: if any keyboard issues please logout/login"
     echo
@@ -483,7 +495,7 @@ case "$REPO_SERIES" in
   bionic)
     echo
     echo "*** bionic: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
+    yes | hp-plugin -p $DIR/hp-plugin-bionic/ #>/dev/null 2>&1
     echo "*** bionic: hp-plugin install complete"
   ;;
 esac
