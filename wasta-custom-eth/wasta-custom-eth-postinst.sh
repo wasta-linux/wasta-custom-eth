@@ -49,6 +49,7 @@
 #   2018-09-01 rik: restarting ibus in different way so as to not require
 #       logout (otherwise cinnamon menu couldn't be typed in)
 #   2018-09-19 rik: suppress output of hp-plugin for bionic
+#       - comment out ibus and lo processing: handled by install-files
 #
 # ==============================================================================
 
@@ -278,54 +279,54 @@ rm -f /etc/skel/.local/share/applications/libreoffice*.desktop
 
 # REMOVE "Wasta-English-Intl-Defaults" extension: remove / reinstall is only
 #   way to update
-EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/wasta-english-intl-defaults.oxt* 2> /dev/null)
-
-if [ "$EXT_FOUND" ];
-then
-    unopkg remove --shared wasta-english-intl-defaults.oxt
-fi
-
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/wasta-english-intl-defaults.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared wasta-english-intl-defaults.oxt
+#fi
+#
 # REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
 # Send error to null so won't display
-EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-hunspell.oxt* 2> /dev/null)
-
-if [ "$EXT_FOUND" ];
-then
-    unopkg remove --shared amharic-hunspell.oxt
-fi
-
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-hunspell.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared amharic-hunspell.oxt
+#fi
+#
 # REMOVE "Amharic Ethiopia Customization" extension: only way to update is
 #   remove then reinstall
-EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-ethiopia-customization.oxt* 2> /dev/null)
-
-if [ "$EXT_FOUND" ];
-then
-    unopkg remove --shared amharic-ethiopia-customization.oxt
-fi
-
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-ethiopia-customization.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared amharic-ethiopia-customization.oxt
+#fi
+#
 # REMOVE "Disable VBA Refactoring" extension: only way to update is
 #   remove then reinstall
-EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/disable-vba-refactoring.oxt* 2> /dev/null)
-
-if [ "$EXT_FOUND" ];
-then
-    unopkg remove --shared disable-vba-refactoring.oxt
-fi
-
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/disable-vba-refactoring.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared disable-vba-refactoring.oxt
+#fi
+#
 # REMOVE macro-medium-security extension: only way to update is
 #   remove then reinstall
-EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/macro-medium-security.oxt* 2> /dev/null)
-
-if [ "$EXT_FOUND" ];
-then
-    unopkg remove --shared macro-medium-security.oxt
-fi
-
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/macro-medium-security.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared macro-medium-security.oxt
+#fi
+#
 # IF user has not initialized LibreOffice, then when adding the above shared
 #   extension, the user's LO settings are created, but owned by root so
 #   they can't change them: solution is to just remove them (will get recreated
 #   when user starts LO the first time).
-
+#
 for LO_FOLDER in /home/*/.config/libreoffice;
 do
     LO_OWNER=""
@@ -357,115 +358,119 @@ fi
 # ibus: load up "standard" keyboards for users
 # This assumes ibus 1.5+ (so doesn't work for precise)
 # ------------------------------------------------------------------------------
-LOCAL_USERS=""
-for USER_FOLDER in $(ls -1 /home)
-do
-    # if user is in /etc/passwd then it is a 'real user' as opposed to
-    # something like wasta-remastersys
-    if [ "$(grep $USER_FOLDER /etc/passwd)" ];
-    then
-        LOCAL_USERS+="$USER_FOLDER "
-    fi
-done
-
-for CURRENT_USER in $LOCAL_USERS;
-do
-    # not sure why these are owned by root sometimes but shouldn't be
-    PERM_CHECK="/home/$CURRENT_USER/.config/ibus"
-    if [ -e "$PERM_CHECK" ];
-    then
-        echo "*** reset owner of $PERM_CHECK"
-        chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
-    fi
-
-    PERM_CHECK="/home/$CURRENT_USER/.cache/dconf"
-    if [ -e "$PERM_CHECK" ];
-    then
-        echo "*** reset owner of $PERM_CHECK"
-        chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
-    fi
-
-    # need to know if need to start dbus for user
-    # don't use dbus-run-session for logged in user or it doesn't work
-    LOGGED_IN_USER="${SUDO_USER:-$USER}"
-    if [[ "$LOGGED_IN_USER" == "$CURRENT_USER" ]];
-    then
-        #echo "login is same as current: $CURRENT_USER"
-        DBUS_SESSION=""
-    else
-        #echo "user not logged in, running update with dbus: $CURRENT_USER"
-        DBUS_SESSION="dbus-run-session --"
-    fi
-
-# 2018-09-01 rik: ibus is getting 'hung' a bit so doesn't work in cinnamon menu
-#   after restarted below.  wondering if need different dbus method like used
-#   in wasta-login.sh??? needs testing...
-
-    IBUS_ENGINES=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general preload-engines")
-    ENGINES_ORDER=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general engines-order")
-
-    # remove legacy el, power-g, and sil ethiopic engines
-    # (, \)\{0,1\} removes any OPTIONAL ", " preceding the kmfl keyboard name
-    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/SILEthiopic-1.3.kmn'@@" <<<"$IBUS_ENGINES")
-    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil-el-ethiopian-latin.kmn'@@" <<<"$IBUS_ENGINES")
-    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/EL.kmn'@@" <<<"$IBUS_ENGINES")
-    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil-pwrgeez.kmn'@@" <<<"$IBUS_ENGINES")
-    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil_power_g_ethiopic.kmn'@@" <<<"$IBUS_ENGINES")
-
-    if [[ "$IBUS_ENGINES" == *"[]"* ]];
-    then
-        echo
-        echo "!!!NO ibus preload-engines found for user: $CURRENT_USER"
-        echo
-        # no engines currently: shouldn't normally happen so add en US as base
-        IBUS_ENGINES="['xkb:us::eng']"
-    fi
-
-    EL_INSTALLED=$(grep sil_el_ethiopian_latin.kmn <<<"$IBUS_ENGINES")
-    if [[ -z "$EL_INSTALLED" ]];
-    then
-        echo
-        echo "Installing sil_el_ethiopian_latin keyboard for user: $CURRENT_USER"
-        echo
-        # append engine to list
-        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn']@" <<<"$IBUS_ENGINES")
-    fi
-
-    POWERG_INSTALLED=$(grep sil_ethiopic_power_g.kmn <<<"$IBUS_ENGINES")
-    if [[ -z "$POWERG_INSTALLED" ]];
-    then
-        echo
-        echo "Installing sil_ethiopic_power_g keyboard for user: $CURRENT_USER"
-        echo
-        # append engine to list
-        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_ethiopic_power_g.kmn']@" <<<"$IBUS_ENGINES")
-    fi
-
-    ETBSIL_INSTALLED=$(grep etb_sil_ethiopic.kmn <<<"$IBUS_ENGINES")
-    if [[ -z "$ETBSIL_INSTALLED" ]];
-    then
-        echo
-        echo "Installing etb_sil_ethiopic keyboard for user: $CURRENT_USER"
-        echo
-        # append engine to list
-        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/etb_sil_ethiopic.kmn']@" <<<"$IBUS_ENGINES")
-    fi
-
-    # set engines
-    su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings set org.freedesktop.ibus.general preload-engines \"$IBUS_ENGINES\"" #>/dev/null 2>&1
-
-    # restart ibus
-    ibus-daemon -xrd
-
-    #2018-09-01 rik: previously used one of below commands but they resulted
-    #   in various GUI elements needing to be restarted before keyboard would
-    #   function (such as Cinnamon Menu).
-    #su "$CURRENT_USER" -c "dbus-launch ibus-daemon -xrd" #>/dev/null 2>&1
-    #su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" #>/dev/null 2>&1
-    echo
-    echo "*** ibus restarted: if any keyboard issues please logout/login"
-    echo
-done
+#
+# 2018-09-19: commenting out as we rely on the gschema.override to set default
+#   keyboards for new users
+#
+#LOCAL_USERS=""
+#for USER_FOLDER in $(ls -1 /home)
+#do
+#    # if user is in /etc/passwd then it is a 'real user' as opposed to
+#    # something like wasta-remastersys
+#    if [ "$(grep $USER_FOLDER /etc/passwd)" ];
+#    then
+#        LOCAL_USERS+="$USER_FOLDER "
+#    fi
+#done
+#
+#for CURRENT_USER in $LOCAL_USERS;
+#do
+#    # not sure why these are owned by root sometimes but shouldn't be
+#    PERM_CHECK="/home/$CURRENT_USER/.config/ibus"
+#    if [ -e "$PERM_CHECK" ];
+#    then
+#        echo "*** reset owner of $PERM_CHECK"
+#        chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
+#    fi
+#
+#    PERM_CHECK="/home/$CURRENT_USER/.cache/dconf"
+#    if [ -e "$PERM_CHECK" ];
+#    then
+#        echo "*** reset owner of $PERM_CHECK"
+#        chown -R $CURRENT_USER:$CURRENT_USER "$PERM_CHECK"
+#    fi
+#
+#    # need to know if need to start dbus for user
+#    # don't use dbus-run-session for logged in user or it doesn't work
+#    LOGGED_IN_USER="${SUDO_USER:-$USER}"
+#    if [[ "$LOGGED_IN_USER" == "$CURRENT_USER" ]];
+#    then
+#        #echo "login is same as current: $CURRENT_USER"
+#        DBUS_SESSION=""
+#    else
+#        #echo "user not logged in, running update with dbus: $CURRENT_USER"
+#        DBUS_SESSION="dbus-run-session --"
+#    fi
+#
+## 2018-09-01 rik: ibus is getting 'hung' a bit so doesn't work in cinnamon menu
+##   after restarted below.  wondering if need different dbus method like used
+##   in wasta-login.sh??? needs testing...
+#
+#    IBUS_ENGINES=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general preload-engines")
+#    ENGINES_ORDER=$(su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings get org.freedesktop.ibus.general engines-order")
+#
+#    # remove legacy el, power-g, and sil ethiopic engines
+#    # (, \)\{0,1\} removes any OPTIONAL ", " preceding the kmfl keyboard name
+#    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/SILEthiopic-1.3.kmn'@@" <<<"$IBUS_ENGINES")
+#    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil-el-ethiopian-latin.kmn'@@" <<<"$IBUS_ENGINES")
+#    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/EL.kmn'@@" <<<"$IBUS_ENGINES")
+#    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil-pwrgeez.kmn'@@" <<<"$IBUS_ENGINES")
+#    IBUS_ENGINES=$(sed -e "s@\(, \)\{0,1\}'/usr/share/kmfl/sil_power_g_ethiopic.kmn'@@" <<<"$IBUS_ENGINES")
+#
+#    if [[ "$IBUS_ENGINES" == *"[]"* ]];
+#    then
+#        echo
+#        echo "!!!NO ibus preload-engines found for user: $CURRENT_USER"
+#        echo
+#        # no engines currently: shouldn't normally happen so add en US as base
+#        IBUS_ENGINES="['xkb:us::eng']"
+#    fi
+#
+#    EL_INSTALLED=$(grep sil_el_ethiopian_latin.kmn <<<"$IBUS_ENGINES")
+#    if [[ -z "$EL_INSTALLED" ]];
+#    then
+#        echo
+#        echo "Installing sil_el_ethiopian_latin keyboard for user: $CURRENT_USER"
+#        echo
+#        # append engine to list
+#        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn']@" <<<"$IBUS_ENGINES")
+#    fi
+#
+#    POWERG_INSTALLED=$(grep sil_ethiopic_power_g.kmn <<<"$IBUS_ENGINES")
+#    if [[ -z "$POWERG_INSTALLED" ]];
+#    then
+#        echo
+#        echo "Installing sil_ethiopic_power_g keyboard for user: $CURRENT_USER"
+#        echo
+#        # append engine to list
+#        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/sil_ethiopic_power_g.kmn']@" <<<"$IBUS_ENGINES")
+#    fi
+#
+#    ETBSIL_INSTALLED=$(grep etb_sil_ethiopic.kmn <<<"$IBUS_ENGINES")
+#    if [[ -z "$ETBSIL_INSTALLED" ]];
+#    then
+#        echo
+#        echo "Installing etb_sil_ethiopic keyboard for user: $CURRENT_USER"
+#        echo
+#        # append engine to list
+#        IBUS_ENGINES=$(sed -e "s@']@', '/usr/share/kmfl/etb_sil_ethiopic.kmn']@" <<<"$IBUS_ENGINES")
+#    fi
+#
+#    # set engines
+#    su -l "$CURRENT_USER" -c "$DBUS_SESSION gsettings set org.freedesktop.ibus.general preload-engines \"$IBUS_ENGINES\"" #>/dev/null 2>&1
+#
+#    # restart ibus
+#    ibus-daemon -xrd
+#
+#    #2018-09-01 rik: previously used one of below commands but they resulted
+#    #   in various GUI elements needing to be restarted before keyboard would
+#    #   function (such as Cinnamon Menu).
+#    #su "$CURRENT_USER" -c "dbus-launch ibus-daemon -xrd" #>/dev/null 2>&1
+#    #su -l "$CURRENT_USER" -c "$DBUS_SESSION ibus restart" #>/dev/null 2>&1
+#    echo
+#    echo "*** ibus restarted: if any keyboard issues please logout/login"
+#    echo
+#done
 
 # ------------------------------------------------------------------------------
 # Set system-wide Paper Size

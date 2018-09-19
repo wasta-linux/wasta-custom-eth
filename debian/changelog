@@ -1,3 +1,10 @@
+wasta-custom-eth (1.5.0) bionic; urgency=medium
+
+  * install-files/schemas: adding to set default ibus keyboards
+  * postinst: comment out ibus and lo settings adjustments
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 19 Sep 2018 17:39:27 +0300
+
 wasta-custom-eth (1.4.6) bionic; urgency=medium
 
   * postinst: suppress output of hp-plugin for bionic

@@ -1,0 +1,15 @@
+# ==============================================================================
+# z_20_wasta-custom-eth.gshema.override
+#
+#   If same key overridden in 2 files, "last wins" regarding filenames
+#       (so a "z_20_*" filename would win over a "z_10_*" filename)
+#
+#   After modifying these .override files, reload with:
+#       glib-compile-schemas /usr/share/glib-2.0/schemas/
+#
+#   2019-09-19 rik: initial script
+#
+# ==============================================================================
+
+[org.freedesktop.ibus.general]
+preload-engines=['xkb:us::eng', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn', '/usr/share/kmfl/sil_ethiopic_power_g.kmn', '/usr/share/kmfl/etb_sil_ethiopic.kmn']
