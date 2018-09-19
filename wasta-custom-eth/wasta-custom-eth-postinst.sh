@@ -48,6 +48,7 @@
 #       - quiet output of gpg key additions
 #   2018-09-01 rik: restarting ibus in different way so as to not require
 #       logout (otherwise cinnamon menu couldn't be typed in)
+#   2018-09-19 rik: suppress output of hp-plugin for bionic
 #
 # ==============================================================================
 
@@ -495,7 +496,7 @@ case "$REPO_SERIES" in
   bionic)
     echo
     echo "*** bionic: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-bionic/ #>/dev/null 2>&1
+    yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
     echo "*** bionic: hp-plugin install complete"
   ;;
 esac
