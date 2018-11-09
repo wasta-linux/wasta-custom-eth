@@ -50,6 +50,10 @@
 #       logout (otherwise cinnamon menu couldn't be typed in)
 #   2018-09-19 rik: suppress output of hp-plugin for bionic
 #       - comment out ibus and lo processing: handled by install-files
+#   2018-11-08 rik: compile gschemas to apply wasta-custom-eth overrides
+#       - cleanup of legacy items
+#       - only run wasta-layout redmond7 IF no wasta-layout already exists
+#         (so don't override user preference if they have set it differently)
 #
 # ==============================================================================
 
@@ -101,22 +105,6 @@ case "$SERIES" in
     REPO_SERIES=$SERIES
   ;;
 esac
-
-# ------------------------------------------------------------------------------
-# Create some Symlinks
-# ------------------------------------------------------------------------------
-#echo
-#echo "*** Adding kmfl-sil-ethiopic-readme.htm symlink to wasta-resources"
-#echo
-
-#ln -sf /usr/share/doc/kmfl-keyboard-sil-ethiopic/readme.htm \
-#    "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
-
-# Remove legacy symlinks in /usr/share/wasta-resources
-# legacy locations
-rm -f "/usr/share/wasta-resources/KMFL SIL Ethiopic Readme.htm"
-rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/KMFL SIL Ethiopic Readme.htm"
-rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
 
 # ------------------------------------------------------------------------------
 # Adjust Software Sources
@@ -207,126 +195,40 @@ fi
 # ------------------------------------------------------------------------------
 # Set Wasta-Layout default
 # ------------------------------------------------------------------------------
+# TODO: need to NOT run if the default has already been overridden
+
 if [ -e "/usr/bin/wasta-layout" ];
 then
-    echo
-    echo "*** Setting Wasta-Layout default to redmond7"
-    echo
-    wasta-layout-system redmond7
+    if [ $(find /usr/share/glib-2.0/schemas/*wasta-layout* -maxdepth 1 -type l 2>/dev/null) ];
+    then
+        echo
+        echo "*** Wasta-Layout already set: not updating"
+        echo
+    else
+        echo
+        echo "*** Setting Wasta-Layout default to redmond7"
+        echo
+        wasta-layout-system redmond7
+    fi
 fi
 
 # ------------------------------------------------------------------------------
-# LibreOffice 5.2 FIX for ibus/kmfl not working correctly
+# Dconf / Gsettings default value adjustments
 # ------------------------------------------------------------------------------
-
-#for USER_HOME in /home/*;
-#do
-#    USER_HOME_NAME=$(basename $USER_HOME)
-#
-#    # only process if "real user" (so not for wasta-remastersys, etc.)
-#    if id "$USER_HOME_NAME" >/dev/null 2>&1;
-#    then
-#        echo
-#        echo "*** ensuring LO ibus/kmfl functionality for $USER_HOME_NAME"
-#        echo
-#
-#        # ensure user applications folder exists
-#        mkdir -p $USER_HOME/.local/share/applications
-#
-#        # sleep needed to avoid race condition that was crashing cinnamon??
-#        sleep 2
-#
-#        # copy in LO desktop launchers
-#        cp /usr/share/applications/libreoffice-*.desktop \
-#            $USER_HOME/.local/share/applications
-#
-#        # ensure all ownership is correct
-#        chown -R $USER_HOME_NAME:$USER_HOME_NAME \
-#            $USER_HOME/.local/share/applications
-#
-#        # update LO desktop launchers to use modified env variables
-#        sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
-#            $USER_HOME/.local/share/applications/libreoffice-*.desktop
-#    fi
-#done
-#
-## /etc/skel updates:
-#echo
-#echo "*** ensuring LO ibus/kmfl functionality for default user profile"
-#echo
-#
-## ensure user applications folder exists
-#mkdir -p /etc/skel/.local/share/applications
-#
-## copy in LO desktop launchers
-#cp /usr/share/applications/libreoffice-*.desktop \
-#    /etc/skel/.local/share/applications
-#
-## update LO desktop launchers to use modified env variables
-#sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
-#    /etc/skel/.local/share/applications/libreoffice-*.desktop
-
-# 2017-12-11 rik: Remove fixes since 5.2 has been patched and newer versions
-#   of LO will have trouble with kmfl IF the fix remains in place
-rm -f /home/*/.local/share/applications/libreoffice*.desktop
-rm -f /etc/skel/.local/share/applications/libreoffice*.desktop
+# Override files in /usr/share/glib-2.0/schemas/ folder.
+#   Values in z_20_wasta-custom-eth.gschema.override will override values
+#   in z_10_wasta-core.gschema.override which will override Ubuntu defaults.
+echo
+echo "*** Updating dconf / gsettings default values"
+echo
+# Sending any "error" to null (if a key isn't found it will return an error,
+#   but for different version of Cinnamon, etc., some keys may not exist but we
+#   don't want to error in this case: suppressing errors to not worry user.
+glib-compile-schemas /usr/share/glib-2.0/schemas/ 2>/dev/null || true;
 
 # ------------------------------------------------------------------------------
-# LibreOffice Preferences Extension install (for all users)
-# LEGACY: now install extensions through install-files/extensions so am removing
-#   ones installed previously using unopkg
+# LibreOffice Fixes
 # ------------------------------------------------------------------------------
-
-# REMOVE "Wasta-English-Intl-Defaults" extension: remove / reinstall is only
-#   way to update
-#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/wasta-english-intl-defaults.oxt* 2> /dev/null)
-#
-#if [ "$EXT_FOUND" ];
-#then
-#    unopkg remove --shared wasta-english-intl-defaults.oxt
-#fi
-#
-# REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
-# Send error to null so won't display
-#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-hunspell.oxt* 2> /dev/null)
-#
-#if [ "$EXT_FOUND" ];
-#then
-#    unopkg remove --shared amharic-hunspell.oxt
-#fi
-#
-# REMOVE "Amharic Ethiopia Customization" extension: only way to update is
-#   remove then reinstall
-#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-ethiopia-customization.oxt* 2> /dev/null)
-#
-#if [ "$EXT_FOUND" ];
-#then
-#    unopkg remove --shared amharic-ethiopia-customization.oxt
-#fi
-#
-# REMOVE "Disable VBA Refactoring" extension: only way to update is
-#   remove then reinstall
-#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/disable-vba-refactoring.oxt* 2> /dev/null)
-#
-#if [ "$EXT_FOUND" ];
-#then
-#    unopkg remove --shared disable-vba-refactoring.oxt
-#fi
-#
-# REMOVE macro-medium-security extension: only way to update is
-#   remove then reinstall
-#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/macro-medium-security.oxt* 2> /dev/null)
-#
-#if [ "$EXT_FOUND" ];
-#then
-#    unopkg remove --shared macro-medium-security.oxt
-#fi
-#
-# IF user has not initialized LibreOffice, then when adding the above shared
-#   extension, the user's LO settings are created, but owned by root so
-#   they can't change them: solution is to just remove them (will get recreated
-#   when user starts LO the first time).
-#
 for LO_FOLDER in /home/*/.config/libreoffice;
 do
     LO_OWNER=""
@@ -353,6 +255,81 @@ then
     echo
     systemctl disable whoopsie.service >/dev/null 2>&1
 fi
+
+# ------------------------------------------------------------------------------
+# Set system-wide Paper Size
+# ------------------------------------------------------------------------------
+# Note: This sets /etc/papersize.  However, many apps do not look at this
+#   location, but instead maintain their own settings for paper size :-(
+paperconfig -p a4
+
+# ------------------------------------------------------------------------------
+# Install hp-plugin (non-interactive)
+# ------------------------------------------------------------------------------
+# Install hp-plugin automatically: needed by some HP printers such as black
+#   HP m127 used by SIL Ethiopia.  Don't display output to confuse user.
+
+case "$REPO_SERIES" in
+  trusty)
+    echo
+    echo "*** trusty: installing hp-plugin"
+    yes | hp-plugin -p $DIR/hp-plugin-trusty/ >/dev/null 2>&1
+    echo "*** trusty: hp-plugin install complete"
+  ;;
+  xenial)
+    echo
+    echo "*** xenial: installing hp-plugin"
+    yes | hp-plugin -p $DIR/hp-plugin-xenial/ >/dev/null 2>&1
+    echo "*** xenial: hp-plugin install complete"
+  ;;
+  bionic)
+    echo
+    echo "*** bionic: installing hp-plugin"
+    yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
+    echo "*** bionic: hp-plugin install complete"
+  ;;
+esac
+
+echo
+
+# ------------------------------------------------------------------------------
+# Disable any apt.conf.d "nocache" file (from wasta-core)
+# ------------------------------------------------------------------------------
+# The nocache option for apt prevents local cache from squid (used by pfsense
+# at main Addis office) from being used.  Need to disable.
+
+if [ -e /etc/apt/apt.conf.d/99nocache ];
+then
+    sed -i -e 's@^Acquire@#Acquire@' /etc/apt/apt.conf.d/99nocache
+fi
+
+# ------------------------------------------------------------------------------
+# Legacy Cleanup
+# ------------------------------------------------------------------------------
+# Remove legacy symlinks in /usr/share/wasta-resources
+# legacy locations
+rm -f "/usr/share/wasta-resources/KMFL SIL Ethiopic Readme.htm"
+rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/KMFL SIL Ethiopic Readme.htm"
+rm -f "/usr/share/wasta-resources/Ethiopia Keyboard Charts/SIL Ethiopic Keyboard Chart.htm"
+
+# 2017-12-11 rik: Remove fixes since 5.2 has been patched and newer versions
+#   of LO will have trouble with kmfl IF the fix remains in place
+rm -f /home/*/.local/share/applications/libreoffice*.desktop
+rm -f /etc/skel/.local/share/applications/libreoffice*.desktop
+
+# ------------------------------------------------------------------------------
+# Finished
+# ------------------------------------------------------------------------------
+
+echo
+echo "*** Finished with wasta-custom-eth-postinst.sh"
+echo
+
+exit 0
+
+# ------------------------------------------------------------------------------
+# Legacy stuff below..........
+# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 # ibus: load up "standard" keyboards for users
@@ -473,58 +450,110 @@ fi
 #done
 
 # ------------------------------------------------------------------------------
-# Set system-wide Paper Size
-# ------------------------------------------------------------------------------
-# Note: This sets /etc/papersize.  However, many apps do not look at this
-#   location, but instead maintain their own settings for paper size :-(
-paperconfig -p a4
-
-# ------------------------------------------------------------------------------
-# Install hp-plugin (non-interactive)
-# ------------------------------------------------------------------------------
-# Install hp-plugin automatically: needed by some HP printers such as black
-#   HP m127 used by SIL Ethiopia.  Don't display output to confuse user.
-
-case "$REPO_SERIES" in
-  trusty)
-    echo
-    echo "*** trusty: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-trusty/ >/dev/null 2>&1
-    echo "*** trusty: hp-plugin install complete"
-  ;;
-  xenial)
-    echo
-    echo "*** xenial: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-xenial/ >/dev/null 2>&1
-    echo "*** xenial: hp-plugin install complete"
-  ;;
-  bionic)
-    echo
-    echo "*** bionic: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
-    echo "*** bionic: hp-plugin install complete"
-  ;;
-esac
-
-echo
-
-# ------------------------------------------------------------------------------
-# Disable any apt.conf.d "nocache" file (from wasta-core)
-# ------------------------------------------------------------------------------
-# The nocache option for apt prevents local cache from squid (used by pfsense
-# at main Addis office) from being used.  Need to disable.
-
-if [ -e /etc/apt/apt.conf.d/99nocache ];
-then
-    sed -i -e 's@^Acquire@#Acquire@' /etc/apt/apt.conf.d/99nocache
-fi
-
-# ------------------------------------------------------------------------------
-# Finished
+# LibreOffice Preferences Extension install (for all users)
+# LEGACY: now install extensions through install-files/extensions so am removing
+#   ones installed previously using unopkg
 # ------------------------------------------------------------------------------
 
-echo
-echo "*** Finished with wasta-custom-eth-postinst.sh"
-echo
+# REMOVE "Wasta-English-Intl-Defaults" extension: remove / reinstall is only
+#   way to update
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/wasta-english-intl-defaults.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared wasta-english-intl-defaults.oxt
+#fi
+#
+# REMOVE "Amharic-Hunspell" extension: new name is "Amharic Ethiopia Customization"
+# Send error to null so won't display
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-hunspell.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared amharic-hunspell.oxt
+#fi
+#
+# REMOVE "Amharic Ethiopia Customization" extension: only way to update is
+#   remove then reinstall
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/amharic-ethiopia-customization.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared amharic-ethiopia-customization.oxt
+#fi
+#
+# REMOVE "Disable VBA Refactoring" extension: only way to update is
+#   remove then reinstall
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/disable-vba-refactoring.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared disable-vba-refactoring.oxt
+#fi
+#
+# REMOVE macro-medium-security extension: only way to update is
+#   remove then reinstall
+#EXT_FOUND=$(ls /var/spool/libreoffice/uno_packages/cache/uno_packages/*/macro-medium-security.oxt* 2> /dev/null)
+#
+#if [ "$EXT_FOUND" ];
+#then
+#    unopkg remove --shared macro-medium-security.oxt
+#fi
+#
+# IF user has not initialized LibreOffice, then when adding the above shared
+#   extension, the user's LO settings are created, but owned by root so
+#   they can't change them: solution is to just remove them (will get recreated
+#   when user starts LO the first time).
 
-exit 0
+# ------------------------------------------------------------------------------
+# LibreOffice 5.2 FIX for ibus/kmfl not working correctly
+# ------------------------------------------------------------------------------
+
+#for USER_HOME in /home/*;
+#do
+#    USER_HOME_NAME=$(basename $USER_HOME)
+#
+#    # only process if "real user" (so not for wasta-remastersys, etc.)
+#    if id "$USER_HOME_NAME" >/dev/null 2>&1;
+#    then
+#        echo
+#        echo "*** ensuring LO ibus/kmfl functionality for $USER_HOME_NAME"
+#        echo
+#
+#        # ensure user applications folder exists
+#        mkdir -p $USER_HOME/.local/share/applications
+#
+#        # sleep needed to avoid race condition that was crashing cinnamon??
+#        sleep 2
+#
+#        # copy in LO desktop launchers
+#        cp /usr/share/applications/libreoffice-*.desktop \
+#            $USER_HOME/.local/share/applications
+#
+#        # ensure all ownership is correct
+#        chown -R $USER_HOME_NAME:$USER_HOME_NAME \
+#            $USER_HOME/.local/share/applications
+#
+#        # update LO desktop launchers to use modified env variables
+#        sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
+#            $USER_HOME/.local/share/applications/libreoffice-*.desktop
+#    fi
+#done
+#
+## /etc/skel updates:
+#echo
+#echo "*** ensuring LO ibus/kmfl functionality for default user profile"
+#echo
+#
+## ensure user applications folder exists
+#mkdir -p /etc/skel/.local/share/applications
+#
+## copy in LO desktop launchers
+#cp /usr/share/applications/libreoffice-*.desktop \
+#    /etc/skel/.local/share/applications
+#
+## update LO desktop launchers to use modified env variables
+#sed -i -e 's#^Exec=libreoffice#Exec=env XMODIFIERS=@im=ibus GTK_IM_MODULE=xim libreoffice#' \
+#    /etc/skel/.local/share/applications/libreoffice-*.desktop
+
+

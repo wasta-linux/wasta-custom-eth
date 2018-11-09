@@ -1,3 +1,11 @@
+wasta-custom-eth (1.5.1) bionic; urgency=medium
+
+  * postinst: compile gschemas
+    - only apply wasta-layout redmond7 IF no wasta-layout already set
+    - various cleanup
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 09 Nov 2018 11:57:43 +0300
+
 wasta-custom-eth (1.5.0) bionic; urgency=medium
 
   * install-files/schemas: adding to set default ibus keyboards
