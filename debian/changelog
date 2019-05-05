@@ -1,3 +1,9 @@
+wasta-custom-eth (1.6.0) bionic; urgency=medium
+
+  * sil_el_ethiopian_latin.kmn: adding Nuer compatibility
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 05 May 2019 18:43:47 +0300
+
 wasta-custom-eth (1.5.1) bionic; urgency=medium
 
   * postinst: compile gschemas

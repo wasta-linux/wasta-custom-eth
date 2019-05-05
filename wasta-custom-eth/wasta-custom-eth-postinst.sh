@@ -54,6 +54,7 @@
 #       - cleanup of legacy items
 #       - only run wasta-layout redmond7 IF no wasta-layout already exists
 #         (so don't override user preference if they have set it differently)
+#   2019-03-01 rik: adding LO 6.1 PPA
 #
 # ==============================================================================
 
@@ -155,23 +156,23 @@ apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
 # For bionic, xenial, trusty: Add LO 6-0 Repository
 if [ "$REPO_SERIES" == "trusty" ] || [ "$REPO_SERIES" == "xenial" ] || [ "$REPO_SERIES" == "bionic" ];
 then
-    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0-$REPO_SERIES.list ];
+    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list ];
     then
         echo
-        echo "*** Adding LibreOffice 6.0 $REPO_SERIES PPA"
+        echo "*** Adding LibreOffice 6.1 $REPO_SERIES PPA"
         echo
-        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-0/ubuntu $REPO_SERIES main" | \
-            tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0-$REPO_SERIES.list
-        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-0/ubuntu $REPO_SERIES main" | \
-            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0-$REPO_SERIES.list
+        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu $REPO_SERIES main" | \
+            tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list
+        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu $REPO_SERIES main" | \
+            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list
     else
-        # found, but ensure LO 6-0 PPA ACTIVE (user could have accidentally disabled)
+        # found, but ensure LO 6-1 PPA ACTIVE (user could have accidentally disabled)
         echo
-        echo "*** LibreOffice 6.0 $REPO_SERIES PPA already exists, ensuring active"
+        echo "*** LibreOffice 6.1 $REPO_SERIES PPA already exists, ensuring active"
         echo
-        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-0/ubuntu '$REPO_SERIES' main' \
-            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-0/ubuntu '$REPO_SERIES' main@d' \
-            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0-$REPO_SERIES.list
+        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu '$REPO_SERIES' main' \
+            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu '$REPO_SERIES' main@d' \
+            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list
     fi
 fi
 
@@ -180,6 +181,7 @@ rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-4*
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0*
 
 # Add Skype Repository
 if ! [ -e $APT_SOURCES_D/skype-stable.list ];
