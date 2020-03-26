@@ -151,28 +151,28 @@ fi
 
 # manually add Skype and LO repo keys (since wasta-offline could be active)
 apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
-apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
+# apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
 
 # For bionic, xenial, trusty: Add LO 6-0 Repository
-if [ "$REPO_SERIES" == "trusty" ] || [ "$REPO_SERIES" == "xenial" ] || [ "$REPO_SERIES" == "bionic" ];
+if [ "$REPO_SERIES" == "bionic" ];
 then
-    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list ];
+    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list ];
     then
         echo
-        echo "*** Adding LibreOffice 6.1 $REPO_SERIES PPA"
+        echo "*** Adding LibreOffice 6.3 $REPO_SERIES PPA"
         echo
-        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu $REPO_SERIES main" | \
-            tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list
-        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu $REPO_SERIES main" | \
-            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list
+        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu $REPO_SERIES main" | \
+            tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list
+        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu $REPO_SERIES main" | \
+            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list
     else
-        # found, but ensure LO 6-1 PPA ACTIVE (user could have accidentally disabled)
+        # found, but ensure LO 6-3 PPA ACTIVE (user could have accidentally disabled)
         echo
-        echo "*** LibreOffice 6.1 $REPO_SERIES PPA already exists, ensuring active"
+        echo "*** LibreOffice 6.3 $REPO_SERIES PPA already exists, ensuring active"
         echo
-        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu '$REPO_SERIES' main' \
-            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-1/ubuntu '$REPO_SERIES' main@d' \
-            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1-$REPO_SERIES.list
+        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu '$REPO_SERIES' main' \
+            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu '$REPO_SERIES' main@d' \
+            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list
     fi
 fi
 
@@ -182,37 +182,39 @@ rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-4*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0*
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1*
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-2*
 
 # Add Skype Repository
-if ! [ -e $APT_SOURCES_D/skype-stable.list ];
-then
-    echo
-    echo "*** Adding Skype Repository"
-    echo
+#if ! [ -e $APT_SOURCES_D/skype-stable.list ];
+#then
+#    echo
+#    echo "*** Adding Skype Repository"
+#    echo
 
-    echo "deb https://repo.skype.com/deb stable main" | \
-        tee $APT_SOURCES_D/skype-stable.list
-fi
+#    echo "deb https://repo.skype.com/deb stable main" | \
+#        tee $APT_SOURCES_D/skype-stable.list
+#fi
 
 # ------------------------------------------------------------------------------
 # Set Wasta-Layout default
 # ------------------------------------------------------------------------------
 # TODO: need to NOT run if the default has already been overridden
 
-if [ -e "/usr/bin/wasta-layout" ];
-then
-    if [ $(find /usr/share/glib-2.0/schemas/*wasta-layout* -maxdepth 1 -type l 2>/dev/null) ];
-    then
-        echo
-        echo "*** Wasta-Layout already set: not updating"
-        echo
-    else
-        echo
-        echo "*** Setting Wasta-Layout default to redmond7"
-        echo
-        wasta-layout-system redmond7
-    fi
-fi
+#if [ -e "/usr/bin/wasta-layout" ];
+#then
+#    if [ $(find /usr/share/glib-2.0/schemas/*wasta-layout* -maxdepth 1 -type l 2>/dev/null) ];
+#    then
+#        echo
+#        echo "*** Wasta-Layout already set: not updating"
+#        echo
+#    else
+#        echo
+#        echo "*** Setting Wasta-Layout default to redmond7"
+#        echo
+#        wasta-layout-system redmond7
+#    fi
+#fi
 
 # ------------------------------------------------------------------------------
 # Dconf / Gsettings default value adjustments
