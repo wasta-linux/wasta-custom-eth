@@ -55,6 +55,7 @@
 #       - only run wasta-layout redmond7 IF no wasta-layout already exists
 #         (so don't override user preference if they have set it differently)
 #   2019-03-01 rik: adding LO 6.1 PPA
+#   2020-09-02 rik: adding hplip plugin for focal
 #
 # ==============================================================================
 
@@ -153,7 +154,7 @@ fi
 apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
 # apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
 
-# For bionic, xenial, trusty: Add LO 6-0 Repository
+# For bionic: Add LO 6-3 Repository
 if [ "$REPO_SERIES" == "bionic" ];
 then
     if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list ];
@@ -291,6 +292,12 @@ case "$REPO_SERIES" in
     echo "*** bionic: installing hp-plugin"
     yes | hp-plugin -p $DIR/hp-plugin-bionic/ >/dev/null 2>&1
     echo "*** bionic: hp-plugin install complete"
+  ;;
+  focal)
+    echo
+    echo "*** focal: installing hp-plugin"
+    yes | hp-plugin -p $DIR/hp-plugin-focal/ >/dev/null 2>&1
+    echo "*** focal: hp-plugin install complete"
   ;;
 esac
 
