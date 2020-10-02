@@ -56,6 +56,7 @@
 #         (so don't override user preference if they have set it differently)
 #   2019-03-01 rik: adding LO 6.1 PPA
 #   2020-09-02 rik: adding hplip plugin for focal
+#   2020-10-02 rik: removing trusty and xenial hplip, enabling zswap
 #
 # ==============================================================================
 
@@ -83,30 +84,8 @@ echo
 # setup directory for reference later
 DIR=/usr/share/wasta-custom-eth/resources
 
-# get series, load them up.
+# get series (no longer compatible with Linux Mint)
 SERIES=$(lsb_release -sc)
-case "$SERIES" in
-
-  trusty|qiana|rebecca|rafaela|rosa)
-    #Ubuntu 14.04 or Mint 17.x
-    REPO_SERIES="trusty"
-  ;;
-
-  xenial|sarah|serena|sonya|sylvia)
-    #Ubuntu 16.04 or Mint 18.x
-    REPO_SERIES="xenial"
-  ;;
-
-  bionic|tara)
-    #Ubuntu 18.04 or Mint 19.x
-    REPO_SERIES="bionic"
-  ;;
-
-  *)
-    # Don't know the series, just go with what is reported
-    REPO_SERIES=$SERIES
-  ;;
-esac
 
 # ------------------------------------------------------------------------------
 # Adjust Software Sources
@@ -154,26 +133,26 @@ fi
 apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
 # apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
 
-# For bionic: Add LO 6-3 Repository
-if [ "$REPO_SERIES" == "bionic" ];
+# For bionic: Add LO 6-4 Repository
+if [ "$SERIES" == "bionic" ];
 then
-    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list ];
+    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4-$SERIES.list ];
     then
         echo
-        echo "*** Adding LibreOffice 6.3 $REPO_SERIES PPA"
+        echo "*** Adding LibreOffice 6.4 $SERIES PPA"
         echo
-        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu $REPO_SERIES main" | \
-            tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list
-        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu $REPO_SERIES main" | \
-            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list
+        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu $SERIES main" | \
+            tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4-$SERIES.list
+        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu $SERIES main" | \
+            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4-$SERIES.list
     else
-        # found, but ensure LO 6-3 PPA ACTIVE (user could have accidentally disabled)
+        # found, but ensure LO 6-4 PPA ACTIVE (user could have accidentally disabled)
         echo
-        echo "*** LibreOffice 6.3 $REPO_SERIES PPA already exists, ensuring active"
+        echo "*** LibreOffice 6.4 $SERIES PPA already exists, ensuring active"
         echo
-        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu '$REPO_SERIES' main' \
-            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu '$REPO_SERIES' main@d' \
-            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$REPO_SERIES.list
+        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu '$SERIES' main' \
+            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu '$SERIES' main@d' \
+            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4-$SERIES.list
     fi
 fi
 
@@ -185,6 +164,7 @@ rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-4*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-2*
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3*
 
 # Add Skype Repository
 #if ! [ -e $APT_SOURCES_D/skype-stable.list ];
@@ -274,19 +254,7 @@ paperconfig -p a4
 # Install hp-plugin automatically: needed by some HP printers such as black
 #   HP m127 used by SIL Ethiopia.  Don't display output to confuse user.
 
-case "$REPO_SERIES" in
-  trusty)
-    echo
-    echo "*** trusty: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-trusty/ >/dev/null 2>&1
-    echo "*** trusty: hp-plugin install complete"
-  ;;
-  xenial)
-    echo
-    echo "*** xenial: installing hp-plugin"
-    yes | hp-plugin -p $DIR/hp-plugin-xenial/ >/dev/null 2>&1
-    echo "*** xenial: hp-plugin install complete"
-  ;;
+case "$SERIES" in
   bionic)
     echo
     echo "*** bionic: installing hp-plugin"
@@ -312,6 +280,19 @@ echo
 if [ -e /etc/apt/apt.conf.d/99nocache ];
 then
     sed -i -e 's@^Acquire@#Acquire@' /etc/apt/apt.conf.d/99nocache
+fi
+
+# ------------------------------------------------------------------------------
+# enable zswap (from wasta-core if found)
+# ------------------------------------------------------------------------------
+# Ubuntu / Wasta-Linux 20.04 swaps really easily, which kills performance.
+# zswap uses *COMPRESSED* RAM to buffer swap before writing to disk.
+# This is good for SSDs (less writing), and good for HDDs (no stalling).
+# zswap should NOT be used with zram (uncompress/recompress shuffling).
+
+if [ -e "/usr/bin/wasta-enable-zswap" ];
+then
+    wasta-enable-zwap auto
 fi
 
 # ------------------------------------------------------------------------------
