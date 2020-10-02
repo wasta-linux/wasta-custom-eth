@@ -292,7 +292,7 @@ fi
 
 if [ -e "/usr/bin/wasta-enable-zswap" ];
 then
-    wasta-enable-zwap auto
+    wasta-enable-zswap auto
 fi
 
 # ------------------------------------------------------------------------------
