@@ -1,3 +1,10 @@
+wasta-custom-eth (1.7.3) focal; urgency=medium
+
+  * bionic: revert to LO 6.3 PPA (6.4 causes finance vba macro
+    corruption)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 20 Jan 2021 15:17:14 +0300
+
 wasta-custom-eth (1.7.2) focal; urgency=medium
 
   * spelling correction
