@@ -1,3 +1,9 @@
+wasta-custom-eth (1.7.4) bionic; urgency=medium
+
+  * postinst: do NOT update to LO 6.4 if $HOSTNAME contains "fin"
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 29 Jan 2021 10:06:04 +0300
+
 wasta-custom-eth (1.7.3) focal; urgency=medium
 
   * bionic: revert to LO 6.3 PPA (6.4 causes finance vba macro

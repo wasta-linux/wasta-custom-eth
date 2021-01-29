@@ -58,6 +58,9 @@
 #   2020-09-02 rik: adding hplip plugin for focal
 #   2020-10-02 rik: removing trusty and xenial hplip, enabling zswap
 #   2021-01-20 rik: revert to LO 6.3 PPA (6.4 corrupts finance VBA macros)
+#   2021-01-29 rik: LO 6.4 needed for most computers since L0 6.3 has print
+#       dialog issues. SO, check hostname and do NOT update to LO 6.4 IF name
+#       contains "fin" (ETB Finance computers are fin-1, fin-2, fin-3).
 #
 # ==============================================================================
 
@@ -136,39 +139,45 @@ apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
 
 # NOTE: LO 6.4 is causing finance macro issues :-(
 
-# For bionic: Add LO 6-3 Repository
+# For bionic: Add LO 6-4 Repository
+#   - only if LOWERCASE hostname does NOT contain "fin"
 if [ "$SERIES" == "bionic" ];
 then
-    if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$SERIES.list ];
+    if [[ ${HOSTNAME,,} =~ .*fin.* ]];
     then
         echo
-        echo "*** Adding LibreOffice 6.3 $SERIES PPA"
+        echo "*** Finance computer: NOT adding / enabling LO 6.4 PPA"
         echo
-        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu $SERIES main" | \
+        rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4*
+    elif ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4-$SERIES.list ];
+    then
+        echo
+        echo "*** Adding LibreOffice 6.4 $SERIES PPA"
+        echo
+        echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu $SERIES main" | \
             tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$SERIES.list
-        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu $SERIES main" | \
-            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$SERIES.list
+        echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu $SERIES main" | \
+            tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4-$SERIES.list
     else
-        # found, but ensure LO 6-3 PPA ACTIVE (user could have accidentally disabled)
+        # found, but ensure LO 6-4 PPA ACTIVE (user could have accidentally disabled)
         echo
-        echo "*** LibreOffice 6.3 $SERIES PPA already exists, ensuring active"
+        echo "*** LibreOffice 6.4 $SERIES PPA already exists, ensuring active"
         echo
-        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu '$SERIES' main' \
-            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-3/ubuntu '$SERIES' main@d' \
-            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3-$SERIES.list
+        sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu '$SERIES' main' \
+            -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-6-4/ubuntu '$SERIES' main@d' \
+            $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4-$SERIES.list
     fi
 fi
 
-# Remove older LO PPAs
+# Remove older LO PPAs (NOTE: do NOT remove LO 6.2 since *fin* computers use it)
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-4*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1*
-rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-2*
-# NOTE: LO 6.4 is causing finance macro issues :-(
-rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4*
+# rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-2*
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3*
 
 # Add Skype Repository
 #if ! [ -e $APT_SOURCES_D/skype-stable.list ];
