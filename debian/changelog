@@ -1,3 +1,9 @@
+wasta-custom-eth (1.7.5) focal; urgency=medium
+
+  * postinst: have bionic and focal update to Wasta LO 7.1 ppa
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 06 Dec 2021 09:38:22 -0600
+
 wasta-custom-eth (1.7.4) bionic; urgency=medium
 
   * postinst: do NOT update to LO 6.4 if $HOSTNAME contains "fin"
