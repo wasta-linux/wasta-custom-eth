@@ -138,26 +138,25 @@ fi
 # apt-key add $DIR/keys/libreoffice-ppa.gpg >/dev/null 2>&1;
 # apt-key add $DIR/keys/skype.gpg >/dev/null 2>&1;
 
-#   - only if LOWERCASE hostname does NOT contain "fin"
 if [ "$SERIES" == "bionic" ] || [ "$SERIES" == "focal" ];
 then
-    if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-1-$SERIES.list ];
+    if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-2-$SERIES.list ];
     then
         echo
-        echo "*** Adding Wasta-Linux LibreOffice 7.1 $SERIES PPA"
+        echo "*** Adding Wasta-Linux LibreOffice 7.2 $SERIES PPA"
         echo
-        echo "deb http://ppa.launchpad.net/wasta-linux/libreoffice-7-1/ubuntu $SERIES main" | \
-            tee $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-1-$SERIES.list
-        echo "# deb-src http://ppa.launchpad.net/wasta-linux/libreoffice-7-1/ubuntu $SERIES main" | \
-            tee -a $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-1-$SERIES.list
+        echo "deb http://ppa.launchpad.net/wasta-linux/libreoffice-7-2/ubuntu $SERIES main" | \
+            tee $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-2-$SERIES.list
+        echo "# deb-src http://ppa.launchpad.net/wasta-linux/libreoffice-7-2/ubuntu $SERIES main" | \
+            tee -a $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-2-$SERIES.list
     else
-        # found, but ensure LO 7.1 PPA ACTIVE (user could have accidentally disabled)
+        # found, but ensure LO 7.2 PPA ACTIVE (user could have accidentally disabled)
         echo
-        echo "*** Wasta-Linux LibreOffice 7.1 $SERIES PPA already exists, ensuring active"
+        echo "*** Wasta-Linux LibreOffice 7.2 $SERIES PPA already exists, ensuring active"
         echo
         # DO NOT match any lines ending in #wasta
         sed -i -e '/#wasta$/! s@.*\(deb http://ppa.launchpad.net\)@\1@' \
-            $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-1-$SERIES.list
+            $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-2-$SERIES.list
     fi
 fi
 
@@ -168,9 +167,10 @@ rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-4*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-0*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-1*
-# rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-2*
+rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-2*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-3*
 rm -rf $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-6-4*
+rm -rf $APT_SOURCES_D/wasta-linux-ubuntu-libreoffice-7-1*
 
 # Add Skype Repository
 #if ! [ -e $APT_SOURCES_D/skype-stable.list ];
@@ -258,7 +258,7 @@ paperconfig -p a4
 # Install hp-plugin (non-interactive)
 # ------------------------------------------------------------------------------
 # Install hp-plugin automatically: needed by some HP printers such as black
-#   HP m127 used by SIL Ethiopia.  Don't display output to confuse user.
+#   HP m127 used by SIL Ethiopia. Don't display output to confuse user.
 
 case "$SERIES" in
   bionic)

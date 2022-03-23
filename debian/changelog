@@ -1,3 +1,9 @@
+wasta-custom-eth (1.7.6) focal; urgency=medium
+
+  * update to Wasta LO 7.2 ppa
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 23 Mar 2022 11:52:03 -0500
+
 wasta-custom-eth (1.7.5) focal; urgency=medium
 
   * postinst: have bionic and focal update to Wasta LO 7.1 ppa
