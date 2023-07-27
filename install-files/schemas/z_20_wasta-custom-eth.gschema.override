@@ -8,8 +8,10 @@
 #       glib-compile-schemas /usr/share/glib-2.0/schemas/
 #
 #   2019-09-19 rik: initial script
+#   2023-07-27 rik: migrating from kmfl to keyman keyboards
 #
 # ==============================================================================
 
 [org.freedesktop.ibus.general]
-preload-engines=['xkb:us::eng', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn', '/usr/share/kmfl/sil_ethiopic_power_g.kmn', '/usr/share/kmfl/etb_sil_ethiopic.kmn']
+preload-engines=['xkb:us::eng', 'mul:/usr/share/keyman/sil_el_ethiopian_latin/sil_el_ethiopian_latin.kmx', 'am:/usr/share/keyman/sil_ethiopic/sil_ethiopic.kmx', 'am:/usr/share/keyman/sil_ethiopic_power_g/sil_ethiopic_power_g.kmx']
+#preload-engines=['xkb:us::eng', '/usr/share/kmfl/sil_el_ethiopian_latin.kmn', '/usr/share/kmfl/sil_ethiopic_power_g.kmn', '/usr/share/kmfl/etb_sil_ethiopic.kmn']

@@ -1,0 +1,65 @@
+[Package]
+Version=7.0
+ExecuteProgram=
+ReadMeFile=readme.htm
+GraphicFile=sil_el_sideimage.bmp
+[StartMenu]
+Path=
+Create=0
+AddUninstallEntry=0
+[Info]
+Version="1.4.1",""
+Name="SIL EL - Ethiopian Latin",""
+Copyright="© 2017-2023 SIL Ethiopia",""
+Author="SIL Ethiopia","mailto:computer_ethiopia@sil.org"
+WebSite="www.silethiopia.org","http://www.silethiopia.org"
+[Files]
+0="Keyboard SIL EL - Ethiopian Latin","sil_el_ethiopian_latin.kmx",0
+1="Keyboard SIL EL - Ethiopian Latin","sil_el_ethiopian_latin.js",0
+2="File welcome.htm","welcome.htm",0
+3="File readme.htm","readme.htm",0
+4="File SIL-EL-Ethiopian-LatinKeyboardMap.pdf","SIL-EL-Ethiopian-LatinKeyboardMap.pdf",0
+5="File sil_el_sideimage.bmp","sil_el_sideimage.bmp",0
+6="Package information","kmp.inf",0
+7="Package information (JSON)","kmp.json",0
+[Keyboard0]
+Name=SIL EL - Ethiopian Latin
+ID=sil_el_ethiopian_latin
+Version=1.4.1
+Language0=mul,Multiple
+Language1=amf-Latn,Hamer-Banna
+Language2=anu-Latn,Anuak
+Language3=bcq-Latn,Bench
+Language4=bst-Latn,Basketo
+Language5=bwo-Latn,Boro
+Language6=gmv-Latn,Gamo
+Language7=gof-Latn,Gofa
+Language8=gru-Latn,Kistane
+Language9=guk-Latn,Gumuz
+Language10=gwd-Latn,Gawwada
+Language11=hdy-Latn,Hadiyya
+Language12=kbr-Latn,Kafa
+Language13=kmq-Latn,Kwama
+Language14=kqy-Latn,Koorete
+Language15=ktb-Latn,Kambaata
+Language16=kxc-Latn,Konso
+Language17=lgn-Latn,T'apo
+Language18=mdx-Latn,Dizin
+Language19=mdy-Latn,Male
+Language20=moy-Latn,Shekkacho
+Language21=mpe-Latn,Majang
+Language22=muz-Latn,Mursi
+Language23=myf-Latn,Bambassi
+Language24=mym-Latn,Me'en
+Language25=nnj-Latn,Nyangatom
+Language26=nus-Latn,Nuer
+Language27=she-Latn,Sheko
+Language28=sid-Latn,Sidamo
+Language29=so,Somali
+Language30=ssy-Latn,Saho
+Language31=suq-Latn,Suri
+Language32=tsb-Latn,Tsamai
+Language33=wal-Latn,Wolaytta
+Language34=wti-Latn,Berta
+Language35=xom-Latn,Komo
+Language36=zay-Latn,Zayse

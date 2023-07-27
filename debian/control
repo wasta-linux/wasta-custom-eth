@@ -7,7 +7,7 @@ Standards-Version: 3.9.7
 
 Package: wasta-custom-eth
 Architecture: all
-Depends: ${misc:Depends}
-Recommends: fonts-sil-abyssinica, ibus-gtk, ibus-gtk3, ibus-kmfl
+Depends: keyman, ${misc:Depends}
+Recommends: fonts-sil-abyssinica, hplip-plugin
 Description: Wasta-Linux Ethiopia Customization
  Sets up machine for Wasta-Linux Ethiopia use.

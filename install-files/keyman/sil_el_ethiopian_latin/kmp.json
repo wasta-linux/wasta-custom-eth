@@ -1,0 +1,220 @@
+{
+  "system": {
+    "keymanDeveloperVersion": "16.0.138.0",
+    "fileVersion": "7.0"
+  },
+  "options": {
+    "readmeFile": "readme.htm",
+    "graphicFile": "sil_el_sideimage.bmp"
+  },
+  "info": {
+    "version": {
+      "description": "1.4.1"
+    },
+    "name": {
+      "description": "SIL EL - Ethiopian Latin"
+    },
+    "copyright": {
+      "description": "\u00A9 2017-2023 SIL Ethiopia"
+    },
+    "author": {
+      "description": "SIL Ethiopia",
+      "url": "mailto:computer_ethiopia@sil.org"
+    },
+    "website": {
+      "description": "www.silethiopia.org",
+      "url": "http://www.silethiopia.org"
+    }
+  },
+  "files": [
+    {
+      "name": "sil_el_ethiopian_latin.kmx",
+      "description": "Keyboard SIL EL - Ethiopian Latin"
+    },
+    {
+      "name": "sil_el_ethiopian_latin.js",
+      "description": "Keyboard SIL EL - Ethiopian Latin"
+    },
+    {
+      "name": "welcome.htm",
+      "description": "File welcome.htm"
+    },
+    {
+      "name": "readme.htm",
+      "description": "File readme.htm"
+    },
+    {
+      "name": "SIL-EL-Ethiopian-LatinKeyboardMap.pdf",
+      "description": "File SIL-EL-Ethiopian-LatinKeyboardMap.pdf"
+    },
+    {
+      "name": "sil_el_sideimage.bmp",
+      "description": "File sil_el_sideimage.bmp"
+    },
+    {
+      "name": "kmp.inf",
+      "description": "Package information"
+    },
+    {
+      "name": "kmp.json",
+      "description": "Package information (JSON)"
+    }
+  ],
+  "keyboards": [
+    {
+      "name": "SIL EL - Ethiopian Latin",
+      "id": "sil_el_ethiopian_latin",
+      "version": "1.4.1",
+      "languages": [
+        {
+          "name": "Multiple",
+          "id": "mul"
+        },
+        {
+          "name": "Hamer-Banna",
+          "id": "amf-Latn"
+        },
+        {
+          "name": "Anuak",
+          "id": "anu-Latn"
+        },
+        {
+          "name": "Bench",
+          "id": "bcq-Latn"
+        },
+        {
+          "name": "Basketo",
+          "id": "bst-Latn"
+        },
+        {
+          "name": "Boro",
+          "id": "bwo-Latn"
+        },
+        {
+          "name": "Gamo",
+          "id": "gmv-Latn"
+        },
+        {
+          "name": "Gofa",
+          "id": "gof-Latn"
+        },
+        {
+          "name": "Kistane",
+          "id": "gru-Latn"
+        },
+        {
+          "name": "Gumuz",
+          "id": "guk-Latn"
+        },
+        {
+          "name": "Gawwada",
+          "id": "gwd-Latn"
+        },
+        {
+          "name": "Hadiyya",
+          "id": "hdy-Latn"
+        },
+        {
+          "name": "Kafa",
+          "id": "kbr-Latn"
+        },
+        {
+          "name": "Kwama",
+          "id": "kmq-Latn"
+        },
+        {
+          "name": "Koorete",
+          "id": "kqy-Latn"
+        },
+        {
+          "name": "Kambaata",
+          "id": "ktb-Latn"
+        },
+        {
+          "name": "Konso",
+          "id": "kxc-Latn"
+        },
+        {
+          "name": "T'apo",
+          "id": "lgn-Latn"
+        },
+        {
+          "name": "Dizin",
+          "id": "mdx-Latn"
+        },
+        {
+          "name": "Male",
+          "id": "mdy-Latn"
+        },
+        {
+          "name": "Shekkacho",
+          "id": "moy-Latn"
+        },
+        {
+          "name": "Majang",
+          "id": "mpe-Latn"
+        },
+        {
+          "name": "Mursi",
+          "id": "muz-Latn"
+        },
+        {
+          "name": "Bambassi",
+          "id": "myf-Latn"
+        },
+        {
+          "name": "Me'en",
+          "id": "mym-Latn"
+        },
+        {
+          "name": "Nyangatom",
+          "id": "nnj-Latn"
+        },
+        {
+          "name": "Nuer",
+          "id": "nus-Latn"
+        },
+        {
+          "name": "Sheko",
+          "id": "she-Latn"
+        },
+        {
+          "name": "Sidamo",
+          "id": "sid-Latn"
+        },
+        {
+          "name": "Somali",
+          "id": "so"
+        },
+        {
+          "name": "Saho",
+          "id": "ssy-Latn"
+        },
+        {
+          "name": "Suri",
+          "id": "suq-Latn"
+        },
+        {
+          "name": "Tsamai",
+          "id": "tsb-Latn"
+        },
+        {
+          "name": "Wolaytta",
+          "id": "wal-Latn"
+        },
+        {
+          "name": "Berta",
+          "id": "wti-Latn"
+        },
+        {
+          "name": "Komo",
+          "id": "xom-Latn"
+        },
+        {
+          "name": "Zayse",
+          "id": "zay-Latn"
+        }
+      ]
+    }
+  ]
+}

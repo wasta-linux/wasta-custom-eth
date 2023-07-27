@@ -1,0 +1,40 @@
+[Package]
+Version=7.0
+ExecuteProgram=
+ReadMeFile=readme.htm
+GraphicFile=sil_ethiopic_power_g_sideimage.bmp
+[StartMenu]
+Path=
+Create=0
+AddUninstallEntry=0
+[Info]
+Name="SIL Ethiopic Power-G",""
+Version="1.2.3",""
+Copyright="© 2017-2023 SIL Ethiopia",""
+Author="SIL Ethiopia","mailto:computer_ethiopia@sil.org"
+WebSite="http://www.silethiopia.org","http://www.silethiopia.org"
+[Files]
+0="Keyboard SIL Ethiopic Power-G","sil_ethiopic_power_g.kmx",0
+1="File sil_ethiopic_power_g_sideimage.bmp","sil_ethiopic_power_g_sideimage.bmp",0
+2="File SIL-Ethiopic-Power-G-Keyboard-Help.pdf","SIL-Ethiopic-Power-G-Keyboard-Help.pdf",0
+3="File readme.htm","readme.htm",0
+4="File welcome.htm","welcome.htm",0
+5="File sil_ethiopic_power_g.js","sil_ethiopic_power_g.js",0
+6="Package information","kmp.inf",0
+7="Package information (JSON)","kmp.json",0
+[Keyboard0]
+Name=SIL Ethiopic Power-G
+ID=sil_ethiopic_power_g
+Version=1.2.3
+Language0=am,Amharic
+Language1=bst-Ethi,Basketo (Ethiopic)
+Language2=bcq-Ethi,Bench (Ethiopic)
+Language3=gdl-Ethi,Dirasha (Ethiopic)
+Language4=mdx-Ethi,Dizin (Ethiopic)
+Language5=gez-Ethi,Geez (Ethiopic)
+Language6=guk-Ethi,Gumuz (Ethiopic)
+Language7=kxc-Ethi,Konso (Ethiopic)
+Language8=suq-Ethi,Suri (Ethiopic)
+Language9=tig-Ethi,Tigre (Ethiopic)
+Language10=zay-Ethi,Zayse-Zergulla (Ethiopic)
+Language11=mul-Ethi,Multiple languages

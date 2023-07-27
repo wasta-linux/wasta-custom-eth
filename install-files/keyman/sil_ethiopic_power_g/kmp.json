@@ -1,0 +1,120 @@
+{
+  "system": {
+    "keymanDeveloperVersion": "16.0.138.0",
+    "fileVersion": "7.0"
+  },
+  "options": {
+    "readmeFile": "readme.htm",
+    "graphicFile": "sil_ethiopic_power_g_sideimage.bmp"
+  },
+  "info": {
+    "name": {
+      "description": "SIL Ethiopic Power-G"
+    },
+    "version": {
+      "description": "1.2.3"
+    },
+    "copyright": {
+      "description": "\u00A9 2017-2023 SIL Ethiopia"
+    },
+    "author": {
+      "description": "SIL Ethiopia",
+      "url": "mailto:computer_ethiopia@sil.org"
+    },
+    "website": {
+      "description": "http://www.silethiopia.org",
+      "url": "http://www.silethiopia.org"
+    }
+  },
+  "files": [
+    {
+      "name": "sil_ethiopic_power_g.kmx",
+      "description": "Keyboard SIL Ethiopic Power-G"
+    },
+    {
+      "name": "sil_ethiopic_power_g_sideimage.bmp",
+      "description": "File sil_ethiopic_power_g_sideimage.bmp"
+    },
+    {
+      "name": "SIL-Ethiopic-Power-G-Keyboard-Help.pdf",
+      "description": "File SIL-Ethiopic-Power-G-Keyboard-Help.pdf"
+    },
+    {
+      "name": "readme.htm",
+      "description": "File readme.htm"
+    },
+    {
+      "name": "welcome.htm",
+      "description": "File welcome.htm"
+    },
+    {
+      "name": "sil_ethiopic_power_g.js",
+      "description": "File sil_ethiopic_power_g.js"
+    },
+    {
+      "name": "kmp.inf",
+      "description": "Package information"
+    },
+    {
+      "name": "kmp.json",
+      "description": "Package information (JSON)"
+    }
+  ],
+  "keyboards": [
+    {
+      "name": "SIL Ethiopic Power-G",
+      "id": "sil_ethiopic_power_g",
+      "version": "1.2.3",
+      "languages": [
+        {
+          "name": "Amharic",
+          "id": "am"
+        },
+        {
+          "name": "Basketo (Ethiopic)",
+          "id": "bst-Ethi"
+        },
+        {
+          "name": "Bench (Ethiopic)",
+          "id": "bcq-Ethi"
+        },
+        {
+          "name": "Dirasha (Ethiopic)",
+          "id": "gdl-Ethi"
+        },
+        {
+          "name": "Dizin (Ethiopic)",
+          "id": "mdx-Ethi"
+        },
+        {
+          "name": "Geez (Ethiopic)",
+          "id": "gez-Ethi"
+        },
+        {
+          "name": "Gumuz (Ethiopic)",
+          "id": "guk-Ethi"
+        },
+        {
+          "name": "Konso (Ethiopic)",
+          "id": "kxc-Ethi"
+        },
+        {
+          "name": "Suri (Ethiopic)",
+          "id": "suq-Ethi"
+        },
+        {
+          "name": "Tigre (Ethiopic)",
+          "id": "tig-Ethi"
+        },
+        {
+          "name": "Zayse-Zergulla (Ethiopic)",
+          "id": "zay-Ethi"
+        },
+        {
+          "name": "Multiple languages",
+          "id": "mul-Ethi"
+        }
+      ]
+    }
+  ]
+}

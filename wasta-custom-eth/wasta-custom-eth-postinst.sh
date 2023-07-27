@@ -259,6 +259,12 @@ paperconfig -p a4
 # ------------------------------------------------------------------------------
 # Install hp-plugin automatically: needed by some HP printers such as black
 #   HP m127 used by SIL Ethiopia. Don't display output to confuse user.
+#
+# Download hplip-A.BB.CC-plugin.run and plugin.run.asc matching the version
+# of number from here:https://sourceforge.net/projects/hplip/files/hplip/
+#
+# 2023-07-27: for jammy we can install hp-plugin package, seems to configure /
+#   install plugin automatically.
 
 case "$SERIES" in
   bionic)
@@ -300,6 +306,58 @@ if [ -e "/usr/bin/wasta-enable-zswap" ];
 then
     wasta-enable-zswap auto
 fi
+
+# ------------------------------------------------------------------------------
+# replace kmfl keyboards with keyman
+# ------------------------------------------------------------------------------
+
+# did this at OS level by putting files to /usr/share/keyman and changing
+#   gschema.override defaults - that easy!
+
+# YUK just manually remove any user-level keyboards, this is too messy!!
+
+#LOCAL_USERS="$(awk -F: '($3>=1000)&&($3<60000)&&($1!="nobody"){print $1}' /etc/passwd)"
+#echo "LOCAL_USERS: $LOCAL_USERS"
+
+#for CURR_USER in $LOCAL_USERS;
+#do
+#    CURR_UID=$(id -u $CURR_USER)
+#    # remove user keyboards (if found)
+#    if [ "$(su -l --user=$CURR_USER dbus-run-session -- km-package-list-installed -u | grep sil_ethiopic)" ];
+#    then
+#        echo "*** sil_ethiopic $CURR_USER INSTALLED"
+#        #sudo --user=$CURR_USER DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$CURR_UID/bus km-package-uninstall sil_ethiopic
+#        sudo --user=$CURR_USER dbus-run-session -- km-package-uninstall sil_ethiopic
+#    else
+#        echo "*** sil_ethiopic $CURR_USER NOT INSTALLED"
+#    fi
+#    read -p "continue?"
+#done
+
+# install shared keyboards
+#if ! [ "$(km-package-list-installed -s | grep sil_el_ethiopian_latin)" ];
+#then
+#    echo "*** sil_el_ethiopian_latin NOT INSTALLED"
+#    km-package-install -s -f $DIR/keyman/sil_el_ethiopian_latin.kmp
+#else
+#    echo "*** sil_el_ethiopian_latin INSTALLED"
+#fi
+
+#if ! [ "$(km-package-list-installed -s | grep sil_ethiopic)" ];
+#then
+#    echo "*** sil_el_ethiopic NOT INSTALLED"
+#    km-package-install -s -f $DIR/keyman/sil_ethiopic.kmp
+#else
+#    echo "*** sil_ethiopic INSTALLED"
+#fi
+
+#if ! [ "$(km-package-list-installed -s | grep sil_ethiopic_power_g)" ];
+#then
+#    echo "*** sil_el_ethiopic_power_g NOT INSTALLED"
+#    km-package-install -s -f $DIR/keyman/sil_ethiopic_power_g.kmp
+#else
+#    echo "*** sil_ethiopic_power_g INSTALLED"
+#fi
 
 # ------------------------------------------------------------------------------
 # Legacy Cleanup
